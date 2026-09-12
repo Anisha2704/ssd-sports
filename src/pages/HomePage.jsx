@@ -1,57 +1,61 @@
 import React from 'react';
-import Header from '../components/Header';
-import HeroSection from '../components/HeroSection';
-import CategoryGrid from '../components/CategoryGrid';
-import NewArrivals from '../components/NewArrivals';
-import CategoriesSection from '../components/CategoriesSection';
-import VideoSection from '../components/VideoSection';
-import StatsSection from '../components/StatsSection';
-import HomepageFeatureSection from '../components/HomepageFeatureSection';
-import InstagramCommunityGallery from '../components/InstagramCommunityGallery';
-import Footer from '../components/Footer';
-import { useProducts } from '../hooks/useProducts';
+import CinematicNavbar from '../components/cinematic/CinematicNavbar';
+import CinematicHero from '../components/cinematic/CinematicHero';
+import ImpactSection from '../components/cinematic/ImpactSection';
+import BatStorySection from '../components/cinematic/BatStorySection';
+import PrecisionSection from '../components/cinematic/PrecisionSection';
+import KitSection from '../components/cinematic/KitSection';
+import PlayerSection from '../components/cinematic/PlayerSection';
+import CollectionSection from '../components/cinematic/CollectionSection';
+import BrandFilmSection from '../components/cinematic/BrandFilmSection';
+import FinalFrameSection from '../components/cinematic/FinalFrameSection';
+import SmoothScroll from '../components/cinematic/SmoothScroll';
+import CustomCursor from '../components/cinematic/CustomCursor';
+import ScrollProgress from '../components/cinematic/ScrollProgress';
 
 export default function HomePage() {
-  const { products, loading } = useProducts({ first: 20 });
-
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-red-600 selection:text-white">
-      {/* Navigation Header */}
-      <Header />
+    <SmoothScroll>
+      <div className="min-h-screen bg-[#050505] text-white flex flex-col font-sans selection:bg-red-600 selection:text-white relative">
+        {/* Custom Desktop Interactive Cursor */}
+        <CustomCursor />
 
-      {/* Main Content Area */}
-      <main className="flex-1 space-y-0">
-        
-        {/* Hero Section */}
-        <HeroSection />
+        {/* Scroll Progress Indicator */}
+        <ScrollProgress />
 
-        {/* Shop Our Best Sellers Carousel Section */}
-        <CategoryGrid
-          products={products}
-          loading={loading}
-        />
+        {/* Cinematic Film-Grade Navigation Header */}
+        <CinematicNavbar />
 
-        {/* New Arrivals Shopify Collection Section */}
-        <NewArrivals />
+        {/* Main Content Flow: The 9 Cinematic Acts */}
+        <main className="flex-1 space-y-0 relative z-10">
+          {/* ACT 01: THE MOMENT — Cinematic Hero */}
+          <CinematicHero />
 
-        {/* Dynamic Shopify Categories Grid Section */}
-        <CategoriesSection />
+          {/* ACT 02: THE IMPACT — Bat & Ball Collision & Hotspots */}
+          <ImpactSection />
 
-        {/* Dynamic Shopify Homepage Video Section */}
-        <VideoSection />
+          {/* ACT 03: THE CRAFT — Macro Optical Camera Inspection */}
+          <BatStorySection />
 
-        {/* Animated Statistics Section */}
-        <StatsSection />
+          {/* ACT 04: THE PRECISION — Metrology, Laser LiDAR Scanning & Dimension Calipers */}
+          <PrecisionSection />
 
-        {/* Dynamic Shopify Craftsmanship/Performance Feature Section */}
-        <HomepageFeatureSection />
+          {/* ACT 05: THE KIT — Dressing Room Preparation & Live Shopify Equipment System */}
+          <KitSection />
 
-        {/* Dynamic Shopify Instagram Community Gallery Section */}
-        <InstagramCommunityGallery />
+          {/* ACT 06: THE PLAYER — The Crease Stance, Time Dilation & Human Ambition */}
+          <PlayerSection />
 
-      </main>
+          {/* ACT 07: THE COLLECTION — Asymmetric Editorial Product Grid & Live Shopify Discovery */}
+          <CollectionSection />
 
-      <Footer />
-    </div>
+          {/* ACT 08: THE BRAND FILM — Philosophy & Climax Manifesto */}
+          <BrandFilmSection />
+
+          {/* ACT 09: THE FINAL FRAME — Climax Resolution, Primary CTA & Luxury Footer */}
+          <FinalFrameSection />
+        </main>
+      </div>
+    </SmoothScroll>
   );
 }

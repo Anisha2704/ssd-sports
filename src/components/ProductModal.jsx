@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { formatPrice } from '../utils/formatters';
 
 export default function ProductModal({ product, onClose }) {
+  const variantList = product?.variants?.nodes || [];
+  const [selectedVariant, setSelectedVariant] = useState(variantList[0] || null);
+
+  // Close modal on escape key press
+  useEffect(() => {
+    if (!product) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [product, onClose]);
+
   if (!product) return null;
 
   const {
@@ -11,20 +24,7 @@ export default function ProductModal({ product, onClose }) {
     featuredImage,
     priceRange,
     compareAtPriceRange,
-    variants,
   } = product;
-
-  const variantList = variants?.nodes || [];
-  const [selectedVariant, setSelectedVariant] = useState(variantList[0] || null);
-
-  // Close modal on escape key press
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
 
   const activePrice = selectedVariant?.price?.amount || priceRange?.minVariantPrice?.amount;
   const currencyCode = selectedVariant?.price?.currencyCode || priceRange?.minVariantPrice?.currencyCode || 'INR';

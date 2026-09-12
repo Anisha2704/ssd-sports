@@ -1,13 +1,30 @@
 @import "tailwindcss";
 
+@theme {
+  --font-headline: "Syne", sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --color-cinematic-void: #050505;
+  --color-cinematic-surface: #080808;
+  --color-cinematic-card: #0d0d0d;
+  --color-cinematic-border: #181818;
+  --color-cinematic-crimson: #dc2626;
+}
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #050505;
+    color: #f8fafc;
+  }
+
   body {
-    background-color: #ffffff;
-    color: #0f172a;
+    background-color: #050505;
+    color: #f8fafc;
     min-height: 100vh;
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   ::selection {
@@ -16,3 +33,56 @@
   }
 }
 
+/* Lenis smooth scrolling rules */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Cinematic film grain and scanline atmospheric overlays */
+.cinematic-glow {
+  filter: drop-shadow(0 0 35px rgba(220, 38, 38, 0.25));
+}
+
+.text-stroke-subtle {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #dc2626;
+}
+
+/* Accessibility: Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+}
