@@ -203,7 +203,7 @@ function EditorialProductCard({ product, isFeatured = false }) {
             className={`px-4 py-2 rounded-full text-[11px] font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
               !isAvailable
                 ? 'opacity-40 text-neutral-500 cursor-not-allowed'
-                : isAdded
+                : added
                 ? 'bg-emerald-600 text-white'
                 : 'bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 hover:border-white'
             }`}
