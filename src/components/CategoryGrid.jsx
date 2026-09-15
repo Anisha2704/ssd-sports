@@ -203,12 +203,15 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
   };
 
   return (
-    <section id="best-sellers" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+    <section id="best-sellers" className="py-16 sm:py-24 bg-[#0B0F17] border-b border-white/10 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+        <div className="text-center max-w-3xl mx-auto space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#FF2E4D]">
+            MATCH-WINNING GEAR
+          </span>
+          <h2 className="font-heading text-3xl sm:text-5xl font-black text-white tracking-wider uppercase">
             Shop Our Best Sellers
           </h2>
         </div>
@@ -224,16 +227,16 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
             /* Loading Skeleton */
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((n) => (
-                <div key={n} className="bg-slate-50 rounded-2xl p-4 animate-pulse space-y-4">
-                  <div className="bg-slate-200 aspect-square rounded-xl"></div>
-                  <div className="h-4 bg-slate-200 rounded w-3/4 mx-auto"></div>
-                  <div className="h-4 bg-slate-200 rounded w-1/2 mx-auto"></div>
-                  <div className="h-10 bg-slate-200 rounded-full w-3/4 mx-auto"></div>
+                <div key={n} className="bg-slate-900/80 border border-white/10 rounded-2xl p-4 animate-pulse space-y-4">
+                  <div className="bg-slate-800 aspect-square rounded-xl"></div>
+                  <div className="h-4 bg-slate-800 rounded w-3/4 mx-auto"></div>
+                  <div className="h-4 bg-slate-800 rounded w-1/2 mx-auto"></div>
+                  <div className="h-10 bg-slate-800 rounded-full w-3/4 mx-auto"></div>
                 </div>
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
+            <div className="text-center py-12 text-slate-400">
               No best sellers available at the moment.
             </div>
           ) : (
@@ -243,7 +246,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
               <button
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center z-20 hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none"
+                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
@@ -254,7 +257,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
               <button
                 onClick={handleNext}
                 aria-label="Next product"
-                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center z-20 hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none"
+                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
@@ -310,28 +313,28 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                       style={{ width: `${100 / visibleCount}%` }}
                       className="flex-shrink-0 px-2 sm:px-3"
                     >
-                      <div className="group bg-white rounded-2xl flex flex-col justify-between h-full transition-all duration-300">
+                      <div className="group bg-[#111827] rounded-2xl flex flex-col justify-between h-full border border-white/10 hover:border-[#FF2E4D]/40 transition-all duration-500 overflow-hidden hover:shadow-[0_12px_25px_rgba(255,46,77,0.15)]">
                         
-                        {/* Product Image Container with Light Gray Background */}
+                        {/* Product Image Container */}
                         <Link
                           to={`/products/${product.handle}`}
-                          className="relative bg-[#f3f4f6] rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block"
+                          className="relative bg-[#1A2234] aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block overflow-hidden"
                         >
                           {/* Badges in Top-Left */}
                           <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
                             {!isAvailable ? (
-                              <span className="bg-slate-800 text-white text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm tracking-wider">
+                              <span className="bg-slate-900/90 text-slate-300 text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border border-white/10 tracking-wider">
                                 Out of Stock
                               </span>
                             ) : (
                               <>
                                 {isNewTag && (
-                                  <span className="bg-[#10b981] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">
+                                  <span className="bg-[#10b981] text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">
                                     New!
                                   </span>
                                 )}
                                 {hasCompareAt && discountPercent > 0 && (
-                                  <span className="bg-[#ef4444] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full font-mono shadow-sm">
+                                  <span className="bg-[#FF2E4D] text-white text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full shadow-sm">
                                     -{discountPercent}%
                                   </span>
                                 )}
@@ -339,7 +342,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                             )}
                           </div>
 
-                          {/* Heart / Wishlist Icon in Top-Right */}
+                          {/* Wishlist Button Top-Right */}
                           <button
                             onClick={(e) => {
                               e.preventDefault();
@@ -347,62 +350,53 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                               toggleWishlist(product);
                             }}
                             aria-label={isFav ? "Remove from wishlist" : "Add to wishlist"}
-                            className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:text-red-500 hover:scale-110 active:scale-95 transition-all duration-200 focus:outline-none"
+                            className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 flex items-center justify-center text-slate-300 hover:text-[#FF2E4D] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
                           >
                             <svg
-                              className={`w-5 h-5 transition-colors ${
-                                isFav ? 'fill-red-500 text-red-500' : 'fill-none stroke-current'
+                              className={`w-4 h-4 transition-colors ${
+                                isFav ? 'fill-[#FF2E4D] text-[#FF2E4D]' : 'fill-none stroke-current'
                               }`}
                               viewBox="0 0 24 24"
-                              strokeWidth={1.8}
+                              stroke="currentColor"
+                              strokeWidth={2}
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                              />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.684a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
                           </button>
 
-                          {/* Product Main & Hover Images */}
+                          {/* Images */}
                           {firstImageUrl ? (
                             <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
-                              {/* Default First Image */}
                               <img
                                 src={firstImageUrl}
                                 alt={product.title || 'Product'}
-                                className={`w-full h-full object-contain transition-opacity duration-500 ${
+                                className={`w-full h-full object-contain transform group-hover:scale-105 transition-all duration-500 ${
                                   secondImageUrl ? 'group-hover:opacity-0 opacity-100' : 'opacity-100'
-                                } ${!isAvailable ? 'opacity-60 grayscale-[30%]' : ''}`}
+                                } ${!isAvailable ? 'opacity-50 grayscale-[40%]' : ''}`}
                                 loading="lazy"
                               />
-
-                              {/* Hover Second Image */}
                               {secondImageUrl && (
                                 <img
                                   src={secondImageUrl}
-                                  alt={`${product.title || 'Product'} alternate view`}
-                                  className="w-full h-full object-contain absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                  alt={`${product.title || 'Product'} alt`}
+                                  className="w-full h-full object-contain absolute inset-0 opacity-0 group-hover:opacity-100 transform group-hover:scale-105 transition-all duration-500"
                                   loading="lazy"
                                 />
                               )}
                             </div>
                           ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
-                              <svg className="w-10 h-10 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
+                            <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
                               <span className="text-xs">No image</span>
                             </div>
                           )}
                         </Link>
 
-                        {/* Product Title, Prices & Action Button below image */}
-                        <div className="pt-4 pb-2 px-1 flex flex-col flex-1 justify-between text-center space-y-2">
+                        {/* Info below image */}
+                        <div className="p-4 flex flex-col flex-1 justify-between text-center space-y-3">
                           <div>
                             <Link
                               to={`/products/${product.handle}`}
-                              className="font-bold text-slate-900 text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-red-600 transition-colors cursor-pointer min-h-[2.5rem] block"
+                              className="font-bold text-white text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-[#FF2E4D] transition-colors cursor-pointer min-h-[2.5rem] block"
                               title={product.title}
                             >
                               {product.title}
@@ -410,31 +404,24 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                           </div>
 
                           {/* Pricing */}
-                          <div className="flex items-center justify-center gap-2 flex-wrap pt-1">
-                            <span className="text-red-500 font-extrabold text-sm sm:text-base">
+                          <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                            <span className="text-[#FF2E4D] font-extrabold text-base sm:text-lg">
                               {formatINR(minPrice)}
                             </span>
                             {hasCompareAt && (
-                              <span className="text-slate-400 text-xs sm:text-sm line-through font-normal">
+                              <span className="text-slate-400 text-xs sm:text-sm line-through font-medium">
                                 {formatINR(compareAtAmount)}
                               </span>
                             )}
                           </div>
 
                           {/* Add to Cart Button */}
-                          <div className="pt-2">
+                          <div className="pt-1">
                             <button
                               onClick={async (e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                if (!isAvailable) {
-                                  showToast({
-                                    type: 'warning',
-                                    title: 'Out of Stock',
-                                    message: `${product.title || 'Product'} is currently out of stock.`,
-                                  });
-                                  return;
-                                }
+                                if (!isAvailable) return;
                                 const firstVariantId = firstVariant?.id;
                                 if (!firstVariantId) return;
                                 setAddingId(product.id);
@@ -449,16 +436,16 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                                 }
                               }}
                               disabled={addingId === product.id || !isAvailable}
-                              className={`w-full max-w-[210px] mx-auto py-2.5 px-5 rounded-full border text-xs sm:text-sm font-bold transition-all duration-300 shadow-sm flex items-center justify-center gap-2 ${
+                              className={`w-full py-2.5 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
                                 !isAvailable
-                                  ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed opacity-80'
+                                  ? 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed opacity-75'
                                   : addedId === product.id
-                                  ? 'bg-emerald-600 text-white border-emerald-600'
-                                  : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-900 hover:text-white hover:border-slate-900 active:scale-95'
+                                  ? 'bg-emerald-600 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]'
+                                  : 'bg-[#FF2E4D] hover:bg-red-600 text-white shadow-[0_0_12px_rgba(255,46,77,0.35)] hover:scale-102 active:scale-95'
                               }`}
                             >
                               {!isAvailable ? (
-                                <span>Out of Stock</span>
+                                <span>Sold Out</span>
                               ) : addingId === product.id ? (
                                 <>
                                   <RefreshCw className="w-3.5 h-3.5 animate-spin" />

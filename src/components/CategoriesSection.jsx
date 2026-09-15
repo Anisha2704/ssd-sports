@@ -1,52 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { useCollections } from '../hooks/useCollections';
+import ThreeDTiltCard from './ThreeDTiltCard';
 
-/**
- * CategoriesSection - Renders Shopify Collections as compact visual category cards with light theme
- */
 export default function CategoriesSection() {
   const { collections, loading, error, isConfigured } = useCollections({ first: 25 });
 
-  // Use all valid Shopify collections returned from Storefront API
   const categoryCollections = (collections || []).filter((col) => col && col.handle);
 
   return (
-    <section className="w-full bg-white py-8 sm:py-12 border-t border-slate-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+    <section className="w-full bg-[#0B0F17] py-16 sm:py-24 border-b border-white/10 text-white relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         
         {/* Section Heading */}
-        <div className="text-center space-y-1">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Categories
+        <div className="text-center space-y-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#FF2E4D]">
+            GEAR BY CATEGORY
+          </span>
+          <h2 className="font-heading text-3xl sm:text-5xl font-black text-white tracking-wider uppercase">
+            Shop By Collection
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto">
-            Explore our high-performance gear sorted by sports categories
+          <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto">
+            Find specialized cricket equipment crafted for your position and style of play.
           </p>
         </div>
 
         {/* Loading Skeleton */}
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[1, 2].map((idx) => (
+            {[1, 2, 3, 4].map((idx) => (
               <div
                 key={idx}
-                className="w-full h-48 sm:h-56 lg:h-60 bg-slate-100 rounded-2xl animate-pulse flex items-end justify-center p-4 border border-slate-200"
+                className="w-full h-56 sm:h-64 bg-slate-900 border border-white/10 rounded-2xl animate-pulse flex items-end justify-center p-4"
               >
-                <div className="w-28 h-8 bg-slate-200 rounded-full"></div>
+                <div className="w-32 h-8 bg-slate-800 rounded-full"></div>
               </div>
             ))}
-          </div>
-        )}
-
-        {/* Error or Not Configured State */}
-        {!loading && (error || !isConfigured) && (
-          <div className="text-center py-8 bg-slate-50 border border-slate-200 rounded-xl p-4 max-w-md mx-auto">
-            <p className="text-slate-500 text-xs sm:text-sm">
-              {!isConfigured
-                ? 'Shopify Storefront credentials missing.'
-                : 'Unable to load categories at this moment.'}
-            </p>
           </div>
         )}
 
@@ -58,47 +48,48 @@ export default function CategoriesSection() {
               const altText = col.image?.altText || col.products?.nodes?.[0]?.featuredImage?.altText || col.title;
 
               return (
-                <Link
-                  key={col.id || col.handle}
-                  to={`/catalog?collection=${encodeURIComponent(col.handle)}`}
-                  className="group relative w-full h-48 sm:h-56 lg:h-60 rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-slate-200 transition-all duration-300 bg-slate-50 block"
-                >
-                  {/* Collection Image / Light Theme Fallback */}
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt={altText}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50 group-hover:scale-105 transition-transform duration-500 ease-out flex flex-col items-center justify-center p-4 border border-slate-100">
-                      <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-2 border border-slate-200 text-slate-800 font-extrabold text-base">
-                        {col.title.charAt(0)}
+                <ThreeDTiltCard key={col.id || col.handle} className="h-64 sm:h-80">
+                  <Link
+                    to={`/catalog?collection=${encodeURIComponent(col.handle)}`}
+                    className="group relative w-full h-full rounded-2xl overflow-hidden border border-white/10 hover:border-[#FF2E4D]/50 transition-all duration-500 bg-slate-950 block shadow-xl flex flex-col justify-between p-6"
+                  >
+                    {/* Collection Image */}
+                    {imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt={altText}
+                        className="absolute inset-0 w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-black group-hover:scale-105 transition-transform duration-500 ease-out border border-white/10" />
+                    )}
+
+                    {/* Dark Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/50 to-transparent group-hover:via-[#0B0F17]/30 transition-all duration-300" />
+
+                    {/* Category Header */}
+                    <div className="relative z-10 flex justify-between items-start">
+                      <span className="text-[10px] font-mono font-extrabold uppercase tracking-widest text-[#FF2E4D] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#FF2E4D]/30">
+                        OFFICIAL COLLECTION
+                      </span>
+                    </div>
+
+                    {/* Category Title & Arrow */}
+                    <div className="relative z-10 space-y-2">
+                      <div className="flex items-center justify-between text-white group-hover:text-[#FF2E4D] transition-colors">
+                        <h3 className="font-heading font-black text-2xl uppercase tracking-wide">
+                          {col.title}
+                        </h3>
+                        <ArrowRight className="w-5 h-5 stroke-[2.5] transform group-hover:translate-x-2 transition-transform duration-300" />
                       </div>
+                      <p className="text-xs text-slate-300 font-medium line-clamp-1">
+                        Explore SSD {col.title} series
+                      </p>
                     </div>
-                  )}
-
-                  {/* Subtle Light-Friendly Contrast Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent group-hover:from-slate-900/50 transition-opacity duration-300" />
-
-                  {/* Category Title White Pill Button */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-auto">
-                    <div className="bg-white text-slate-900 font-bold text-xs sm:text-sm px-5 py-2 rounded-full shadow-md border border-slate-200/80 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900 transition-all duration-300 whitespace-nowrap tracking-wide text-center">
-                      {col.title}
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </ThreeDTiltCard>
               );
             })}
-          </div>
-        )}
-
-        {/* Empty Collection State */}
-        {!loading && !error && categoryCollections.length === 0 && (
-          <div className="text-center py-8 bg-slate-50 border border-slate-200 rounded-xl p-4 max-w-md mx-auto">
-            <p className="text-slate-500 text-xs sm:text-sm">
-              No categories available at this time.
-            </p>
           </div>
         )}
 

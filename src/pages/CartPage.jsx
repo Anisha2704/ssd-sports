@@ -28,32 +28,37 @@ export default function CartPage() {
   const checkoutUrl = cart?.checkoutUrl;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#0B0F17] text-white flex flex-col font-sans">
       <Header />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-10 sm:py-16 space-y-8">
-        <div className="space-y-2 border-b border-slate-100 pb-6 text-center sm:text-left">
-          <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tight">Your Shopping Cart</h1>
-          <p className="text-slate-500 text-xs sm:text-sm">
-            Review your selected equipment from our live Shopify Storefront before proceeding to checkout.
+        <div className="space-y-2 border-b border-white/10 pb-6 text-center sm:text-left">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#FF2E4D]">
+            YOUR SELECTIONS
+          </span>
+          <h1 className="font-heading text-3xl sm:text-5xl font-black text-white uppercase tracking-wider mt-1">
+            Shopping Cart
+          </h1>
+          <p className="text-slate-300 text-xs sm:text-sm">
+            Review your selected equipment before proceeding to direct Shopify checkout.
           </p>
         </div>
 
         {loading ? (
           <div className="text-center py-20 space-y-4">
-            <RefreshCw className="w-8 h-8 text-red-600 animate-spin mx-auto" />
-            <p className="text-slate-500 text-xs">Syncing with Shopify...</p>
+            <RefreshCw className="w-8 h-8 text-[#FF2E4D] animate-spin mx-auto" />
+            <p className="text-slate-400 text-xs">Syncing cart with Shopify...</p>
           </div>
         ) : lineItems.length === 0 ? (
           /* Empty Cart View */
-          <div className="text-center space-y-6 py-12 max-w-md mx-auto">
-            <div className="w-20 h-20 rounded-full bg-slate-50 border border-slate-200 text-slate-400 mx-auto flex items-center justify-center">
+          <div className="text-center space-y-6 py-16 max-w-md mx-auto">
+            <div className="w-20 h-20 rounded-full bg-slate-900 border border-white/10 text-slate-400 mx-auto flex items-center justify-center">
               <ShoppingBag className="w-10 h-10 stroke-[1.5]" />
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight">Your Shopping Cart is Empty</h2>
-              <p className="text-slate-500 text-xs leading-relaxed">
+              <h2 className="font-heading text-2xl font-black text-white uppercase tracking-wider">Your Cart is Empty</h2>
+              <p className="text-slate-400 text-xs leading-relaxed">
                 Add items from our live catalog to view price summaries and instant checkout options.
               </p>
             </div>
@@ -61,9 +66,9 @@ export default function CartPage() {
             <div>
               <Link
                 to="/catalog"
-                className="inline-block px-8 py-3.5 bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-red-600/20"
+                className="inline-block px-8 py-3.5 bg-[#FF2E4D] hover:bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg"
               >
-                Browse Products
+                Browse Catalog
               </Link>
             </div>
           </div>
@@ -82,10 +87,10 @@ export default function CartPage() {
                 return (
                   <div
                     key={item.id}
-                    className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 sm:gap-6"
+                    className="bg-slate-900/90 border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-xl"
                   >
                     {/* Item Image */}
-                    <div className="w-20 h-20 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-2 border border-slate-200">
+                    <div className="w-20 h-20 bg-[#1A2234] rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-2 border border-white/10">
                       {image ? (
                         <img
                           src={image}
@@ -93,7 +98,7 @@ export default function CartPage() {
                           className="w-full h-full object-contain"
                         />
                       ) : (
-                        <ShoppingBag className="w-6 h-6 text-slate-400" />
+                        <ShoppingBag className="w-6 h-6 text-slate-500" />
                       )}
                     </div>
 
@@ -101,49 +106,49 @@ export default function CartPage() {
                     <div className="flex-1 text-center sm:text-left space-y-1">
                       <Link
                         to={product?.handle ? `/products/${product.handle}` : '/catalog'}
-                        className="font-bold text-slate-900 text-sm sm:text-base hover:text-red-600 transition-colors line-clamp-1"
+                        className="font-bold text-white text-sm sm:text-base hover:text-[#FF2E4D] transition-colors line-clamp-1"
                       >
                         {product?.title || 'Product Item'}
                       </Link>
                       
                       {variant?.title && variant.title !== 'Default Title' && (
-                        <p className="text-xs text-slate-500">{variant.title}</p>
+                        <p className="text-xs text-slate-400">{variant.title}</p>
                       )}
 
-                      <p className="text-xs font-mono text-slate-600 pt-1">
+                      <p className="text-xs font-mono text-[#FF2E4D] font-bold pt-1">
                         {formatINR(variant?.price?.amount)}
                       </p>
                     </div>
 
                     {/* Quantity & Controls */}
                     <div className="flex items-center gap-4 sm:gap-6 shrink-0">
-                      <div className="flex items-center bg-white border border-slate-200 rounded-lg p-1">
+                      <div className="flex items-center bg-slate-950 border border-white/15 rounded-lg p-1">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-7 h-7 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors"
+                          className="w-7 h-7 rounded bg-slate-800 hover:bg-[#FF2E4D] text-white flex items-center justify-center transition-colors cursor-pointer"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-8 text-center font-bold text-xs font-mono text-slate-900">
+                        <span className="w-8 text-center font-bold text-xs font-mono text-white">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-7 h-7 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors"
+                          className="w-7 h-7 rounded bg-slate-800 hover:bg-[#FF2E4D] text-white flex items-center justify-center transition-colors cursor-pointer"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
 
                       <div className="text-right">
-                        <span className="font-bold font-mono text-sm text-red-600 block">
+                        <span className="font-bold font-mono text-sm text-[#FF2E4D] block">
                           {formatINR(lineTotal)}
                         </span>
                       </div>
 
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="text-slate-400 hover:text-red-600 transition-colors p-1"
+                        className="text-slate-400 hover:text-[#FF2E4D] transition-colors p-1 cursor-pointer"
                         title="Remove item"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -155,31 +160,31 @@ export default function CartPage() {
             </div>
 
             {/* Order Summary (Span 4) */}
-            <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-6 sticky top-24">
-              <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-tight border-b border-slate-200 pb-4">
+            <div className="lg:col-span-4 bg-slate-900/90 border border-white/10 rounded-2xl p-6 space-y-6 sticky top-24 shadow-2xl backdrop-blur-md">
+              <h3 className="font-heading text-lg font-black text-white uppercase tracking-wider border-b border-white/10 pb-4">
                 Order Summary
               </h3>
 
               <div className="space-y-3 text-xs">
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-slate-300">
                   <span>Subtotal</span>
-                  <span className="font-bold font-mono text-slate-900">{formatINR(subtotal)}</span>
+                  <span className="font-bold font-mono text-white">{formatINR(subtotal)}</span>
                 </div>
-                <div className="flex justify-between text-slate-500">
+                <div className="flex justify-between text-slate-400">
                   <span>Taxes &amp; Shipping</span>
                   <span>Calculated at checkout</span>
                 </div>
               </div>
 
-              <div className="border-t border-slate-200 pt-4 flex justify-between items-baseline">
-                <span className="text-sm font-bold text-slate-900">Total</span>
-                <span className="text-xl font-black text-red-600 font-mono">{formatINR(subtotal)}</span>
+              <div className="border-t border-white/10 pt-4 flex justify-between items-baseline">
+                <span className="text-sm font-bold text-white uppercase tracking-wider">Total</span>
+                <span className="text-xl font-black text-[#FF2E4D] font-mono">{formatINR(subtotal)}</span>
               </div>
 
               {checkoutUrl ? (
                 <a
                   href={checkoutUrl}
-                  className="w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 text-center"
+                  className="w-full py-4 px-6 bg-gradient-to-r from-red-600 to-[#FF2E4D] hover:from-red-500 hover:to-[#FF4763] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,46,77,0.35)] flex items-center justify-center gap-2 text-center cursor-pointer"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight className="w-4 h-4" />
@@ -187,7 +192,7 @@ export default function CartPage() {
               ) : (
                 <button
                   disabled
-                  className="w-full py-4 px-6 bg-slate-200 text-slate-400 font-extrabold text-xs uppercase tracking-wider rounded-xl cursor-not-allowed text-center"
+                  className="w-full py-4 px-6 bg-slate-950 text-slate-500 font-extrabold text-xs uppercase tracking-wider rounded-xl cursor-not-allowed text-center border border-white/10"
                 >
                   Checkout Unavailable
                 </button>
@@ -202,3 +207,4 @@ export default function CartPage() {
     </div>
   );
 }
+

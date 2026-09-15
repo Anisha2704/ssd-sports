@@ -107,26 +107,26 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="group bg-white rounded-2xl flex flex-col justify-between h-full border border-slate-100 hover:shadow-lg transition-all duration-300">
+    <div className="group bg-[#111827] rounded-2xl flex flex-col justify-between h-full border border-white/10 hover:border-[#FF2E4D]/40 hover:shadow-[0_12px_30px_rgba(255,46,77,0.15)] transition-all duration-500 hover:-translate-y-1 overflow-hidden">
       
-      {/* Product Image Area with Light Gray Background -> Links to Product Details Page */}
-      <Link to={productUrl} className="relative bg-[#f3f4f6] rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block">
+      {/* Product Image Area with Dark Frame -> Links to Product Details Page */}
+      <Link to={productUrl} className="relative bg-[#1A2234] aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block overflow-hidden">
         
         {/* Badges Top-Left */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
           {!isAvailable ? (
-            <span className="bg-slate-800 text-white text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm tracking-wider">
+            <span className="bg-slate-900/90 text-slate-300 text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border border-white/10 tracking-wider">
               Out of Stock
             </span>
           ) : (
             <>
               {isNewTag && (
-                <span className="bg-[#10b981] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">
+                <span className="bg-[#10b981] text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">
                   New!
                 </span>
               )}
               {hasCompareAt && discountPercent > 0 && (
-                <span className="bg-[#ef4444] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full font-mono shadow-sm">
+                <span className="bg-[#FF2E4D] text-white text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full shadow-sm">
                   -{discountPercent}%
                 </span>
               )}
@@ -142,13 +142,13 @@ export default function ProductCard({ product }) {
             toggleWishlist(product);
           }}
           aria-label={isFav ? "Remove from wishlist" : "Add to wishlist"}
-          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:text-red-500 hover:scale-110 active:scale-95 transition-all duration-200 focus:outline-none"
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 flex items-center justify-center text-slate-300 hover:text-[#FF2E4D] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
         >
           <Heart
-            className={`w-5 h-5 transition-colors ${
-              isFav ? 'fill-red-500 text-red-500' : 'fill-none stroke-current'
+            className={`w-4 h-4 transition-colors ${
+              isFav ? 'fill-[#FF2E4D] text-[#FF2E4D]' : 'fill-none stroke-current'
             }`}
-            strokeWidth={1.8}
+            strokeWidth={2}
           />
         </button>
 
@@ -159,9 +159,9 @@ export default function ProductCard({ product }) {
             <img
               src={firstImageUrl}
               alt={title || 'Product'}
-              className={`w-full h-full object-contain transition-opacity duration-500 ${
+              className={`w-full h-full object-contain transform group-hover:scale-105 transition-all duration-500 ${
                 secondImageUrl ? 'group-hover:opacity-0 opacity-100' : 'opacity-100'
-              } ${!isAvailable ? 'opacity-60 grayscale-[30%]' : ''}`}
+              } ${!isAvailable ? 'opacity-50 grayscale-[40%]' : ''}`}
               loading="lazy"
             />
 
@@ -170,25 +170,25 @@ export default function ProductCard({ product }) {
               <img
                 src={secondImageUrl}
                 alt={`${title || 'Product'} alternate view`}
-                className="w-full h-full object-contain absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="w-full h-full object-contain absolute inset-0 opacity-0 group-hover:opacity-100 transform group-hover:scale-105 transition-all duration-500"
                 loading="lazy"
               />
             )}
           </div>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
-            <span className="text-xs">No image</span>
+          <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
+            <span className="text-xs">No image available</span>
           </div>
         )}
       </Link>
 
       {/* Info below image */}
-      <div className="pt-4 pb-3 px-2 flex flex-col flex-1 justify-between text-center space-y-2">
+      <div className="p-4 flex flex-col flex-1 justify-between text-center space-y-3">
         <div>
           {/* Product Title -> Links to Product Details Page */}
           <Link
             to={productUrl}
-            className="font-bold text-slate-900 text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-red-600 transition-colors cursor-pointer min-h-[2.5rem] block"
+            className="font-bold text-white text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-[#FF2E4D] transition-colors cursor-pointer min-h-[2.5rem] block"
             title={title}
           >
             {title}
@@ -196,34 +196,34 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Pricing */}
-        <div className="flex items-center justify-center gap-2 flex-wrap pt-1">
-          <span className="text-red-500 font-extrabold text-sm sm:text-base">
+        <div className="flex items-center justify-center gap-2.5 flex-wrap">
+          <span className="text-[#FF2E4D] font-extrabold text-base sm:text-lg">
             {formatINR(minPrice)}
           </span>
           {hasCompareAt && (
-            <span className="text-slate-400 text-xs sm:text-sm line-through font-normal">
+            <span className="text-slate-400 text-xs sm:text-sm line-through font-medium">
               {formatINR(compareAtAmount)}
             </span>
           )}
         </div>
 
         {/* Direct Add to Cart Button / Out of Stock button */}
-        <div className="pt-2">
+        <div className="pt-1">
           <button
             onClick={handleAddToCartClick}
             disabled={adding || !isAvailable}
-            className={`w-full max-w-[210px] mx-auto py-2.5 px-5 rounded-full border text-xs sm:text-sm font-bold transition-all duration-300 shadow-sm flex items-center justify-center gap-2 ${
+            className={`w-full py-2.5 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
               !isAvailable
-                ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed opacity-80'
+                ? 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed opacity-75'
                 : added
-                ? 'bg-emerald-600 text-white border-emerald-600'
-                : 'bg-white border-slate-300 text-slate-800 hover:bg-slate-900 hover:text-white hover:border-slate-900 active:scale-95'
+                ? 'bg-emerald-600 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]'
+                : 'bg-[#FF2E4D] hover:bg-red-600 text-white shadow-[0_0_12px_rgba(255,46,77,0.35)] hover:scale-102 active:scale-95'
             }`}
           >
             {!isAvailable ? (
               <>
                 <AlertCircle className="w-3.5 h-3.5" />
-                <span>Out of Stock</span>
+                <span>Sold Out</span>
               </>
             ) : adding ? (
               <>
@@ -233,7 +233,7 @@ export default function ProductCard({ product }) {
             ) : added ? (
               <>
                 <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                <span>Added!</span>
+                <span>Added to Cart</span>
               </>
             ) : (
               <>
@@ -248,3 +248,4 @@ export default function ProductCard({ product }) {
     </div>
   );
 }
+

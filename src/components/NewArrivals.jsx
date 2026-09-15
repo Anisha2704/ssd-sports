@@ -226,16 +226,19 @@ export default function NewArrivals({ onQuickView }) {
   };
 
   return (
-    <section id="new-arrivals" className="py-16 sm:py-20 bg-[#f5f5f5] border-b border-slate-200">
+    <section id="new-arrivals" className="py-16 sm:py-24 bg-[#0B0F17] border-b border-white/10 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto space-y-2">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#FF2E4D]">
+            JUST RELEASED
+          </span>
+          <h2 className="font-heading text-3xl sm:text-5xl font-black text-white tracking-wider uppercase">
             {collection?.title || 'New Arrivals'}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 font-medium">
-            {collection?.description || 'Discover the latest gear from SSD Sports.'}
+          <p className="text-xs sm:text-sm text-slate-300 font-normal">
+            {collection?.description || 'Explore our newest high-performance cricket gear and equipment.'}
           </p>
         </div>
 
@@ -247,26 +250,26 @@ export default function NewArrivals({ onQuickView }) {
           onMouseLeave={handleMouseLeave}
         >
           {loading ? (
-            /* Skeleton Loading on Light Grey Background */
+            /* Skeleton Loading */
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((n) => (
-                <div key={n} className="bg-white border border-slate-200 rounded-2xl p-4 animate-pulse space-y-4 shadow-sm">
-                  <div className="bg-slate-100 aspect-square rounded-2xl w-full"></div>
-                  <div className="h-4 bg-slate-100 rounded w-3/4 mx-auto"></div>
-                  <div className="h-4 bg-slate-100 rounded w-1/2 mx-auto"></div>
-                  <div className="h-10 bg-slate-100 rounded-full w-3/4 mx-auto"></div>
+                <div key={n} className="bg-slate-900 border border-white/10 rounded-2xl p-4 animate-pulse space-y-4">
+                  <div className="bg-slate-800 aspect-square rounded-2xl w-full"></div>
+                  <div className="h-4 bg-slate-800 rounded w-3/4 mx-auto"></div>
+                  <div className="h-4 bg-slate-800 rounded w-1/2 mx-auto"></div>
+                  <div className="h-10 bg-slate-800 rounded-full w-3/4 mx-auto"></div>
                 </div>
               ))}
             </div>
           ) : error ? (
             /* Technical Error Fallback */
-            <div className="text-center py-12 text-slate-600 text-sm font-semibold">
+            <div className="text-center py-12 text-slate-400 text-sm font-medium">
               {error}
             </div>
           ) : products.length === 0 ? (
-            /* Empty Collection or Collection Not Found Fallback */
-            <div className="text-center py-12 text-slate-600 text-sm font-semibold">
-              New arrivals are coming soon.
+            /* Empty Collection Fallback */
+            <div className="text-center py-12 text-slate-400 text-sm font-medium">
+              New arrivals coming soon.
             </div>
           ) : (
             /* Product Carousel Track */
@@ -276,7 +279,7 @@ export default function NewArrivals({ onQuickView }) {
               <button
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center z-20 hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none"
+                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
@@ -287,7 +290,7 @@ export default function NewArrivals({ onQuickView }) {
               <button
                 onClick={handleNext}
                 aria-label="Next product"
-                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-slate-800 shadow-xl border border-slate-200 flex items-center justify-center z-20 hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none"
+                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
@@ -324,3 +327,4 @@ export default function NewArrivals({ onQuickView }) {
     </section>
   );
 }
+

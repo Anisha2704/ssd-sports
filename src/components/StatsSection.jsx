@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useHomepageFeature } from '../hooks/useHomepageFeature';
+import ThreeDTiltCard from './ThreeDTiltCard';
 
-/**
- * StatsSection - Animated Statistics Section driven by Shopify Metaobject
- */
 export default function StatsSection() {
   const { feature, loading } = useHomepageFeature();
   const [currentCount, setCurrentCount] = useState(0);
@@ -12,7 +10,7 @@ export default function StatsSection() {
 
   const targetNumber = feature?.statNumber || 1000;
   const statLabel = feature?.statLabel || 'Happy Customers';
-  const statDescription = feature?.statDescription || 'Explore more. Play better.';
+  const statDescription = feature?.statDescription || 'Worldwide cricketers playing with SSD Sports equipment.';
 
   useEffect(() => {
     if (hasAnimated || loading) return;
@@ -24,13 +22,11 @@ export default function StatsSection() {
           setHasAnimated(true);
 
           let startTime = null;
-          const duration = 2000; // 2 seconds animation
+          const duration = 2200;
 
           const animate = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
-            
-            // Ease out quad formula for smooth decelerating count
             const easedProgress = 1 - Math.pow(1 - progress, 3);
             const value = Math.floor(easedProgress * targetNumber);
 
@@ -50,50 +46,68 @@ export default function StatsSection() {
     );
 
     const currentElem = sectionRef.current;
-    if (currentElem) {
-      observer.observe(currentElem);
-    }
+    if (currentElem) observer.observe(currentElem);
 
     return () => {
-      if (currentElem) {
-        observer.unobserve(currentElem);
-      }
+      if (currentElem) observer.unobserve(currentElem);
     };
   }, [hasAnimated, loading, targetNumber]);
-
-  if (loading) {
-    return (
-      <section className="w-full bg-slate-50 py-16 sm:py-24 border-t border-slate-100 flex items-center justify-center">
-        <div className="space-y-4 text-center animate-pulse">
-          <div className="w-48 h-14 bg-slate-200 rounded-2xl mx-auto"></div>
-          <div className="w-36 h-6 bg-slate-200 rounded-lg mx-auto"></div>
-          <div className="w-56 h-4 bg-slate-200 rounded-lg mx-auto"></div>
-        </div>
-      </section>
-    );
-  }
 
   const formattedCount = currentCount.toLocaleString();
 
   return (
-    <section ref={sectionRef} className="w-full bg-slate-50 py-16 sm:py-24 border-t border-slate-100">
-      <div className="max-w-4xl mx-auto px-4 text-center space-y-3 sm:space-y-4">
-        
-        {/* Large Animated Statistic */}
-        <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-slate-950 tracking-tight font-sans">
-          {formattedCount}+
+    <section ref={sectionRef} className="w-full bg-[#0B0F17] py-16 sm:py-24 border-b border-white/10 text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,46,77,0.1)_0%,transparent_70%)] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          
+          {/* Main Shopify-driven Stat */}
+          <ThreeDTiltCard>
+            <div className="bg-[#111827] border border-white/10 p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-xl">
+              <div className="font-heading text-5xl sm:text-6xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,46,77,0.4)]">
+                <span className="text-[#FF2E4D]">{formattedCount}</span>+
+              </div>
+              <h3 className="text-base font-extrabold text-white tracking-widest uppercase font-heading">
+                {statLabel}
+              </h3>
+              <p className="text-xs text-slate-400 font-normal leading-relaxed">
+                {statDescription}
+              </p>
+            </div>
+          </ThreeDTiltCard>
+
+          {/* Secondary Match Grade Stat */}
+          <ThreeDTiltCard>
+            <div className="bg-[#111827] border border-white/10 p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-xl">
+              <div className="font-heading text-5xl sm:text-6xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,46,77,0.4)]">
+                <span className="text-white">100</span>%
+              </div>
+              <h3 className="text-base font-extrabold text-[#FF2E4D] tracking-widest uppercase font-heading">
+                MATCH GRADE WILLOW
+              </h3>
+              <p className="text-xs text-slate-400 font-normal leading-relaxed">
+                Hand-selected English & Kashmir willow clefts tested for balance & durability.
+              </p>
+            </div>
+          </ThreeDTiltCard>
+
+          {/* Third Dispatch Stat */}
+          <ThreeDTiltCard>
+            <div className="bg-[#111827] border border-white/10 p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-xl">
+              <div className="font-heading text-5xl sm:text-6xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,46,77,0.4)]">
+                <span className="text-white">24</span>/7
+              </div>
+              <h3 className="text-base font-extrabold text-white tracking-widest uppercase font-heading">
+                PAN-INDIA EXPRESS DELIVERY
+              </h3>
+              <p className="text-xs text-slate-400 font-normal leading-relaxed">
+                Fast dispatch with full order tracking across India & international destinations.
+              </p>
+            </div>
+          </ThreeDTiltCard>
+
         </div>
-
-        {/* Stat Label */}
-        <h3 className="text-lg sm:text-2xl font-extrabold text-slate-900 tracking-wide uppercase">
-          {statLabel}
-        </h3>
-
-        {/* Stat Subtitle / Description */}
-        <p className="text-sm sm:text-base text-slate-500 font-medium max-w-md mx-auto leading-relaxed">
-          {statDescription}
-        </p>
-
       </div>
     </section>
   );

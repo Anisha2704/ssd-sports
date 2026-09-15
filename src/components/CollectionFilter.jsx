@@ -10,10 +10,10 @@ export default function CollectionFilter({ collections = [], activeHandle = null
       {/* "All Products" Pill */}
       <Link
         to="/catalog"
-        className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap border ${
+        className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
           !activeHandle
-            ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-            : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'
+            ? 'bg-[#FF2E4D] text-white border-[#FF2E4D] shadow-[0_0_12px_rgba(255,46,77,0.4)]'
+            : 'bg-slate-900/80 text-slate-300 border-white/10 hover:bg-slate-800 hover:text-white hover:border-white/20'
         }`}
       >
         All Products
@@ -26,10 +26,10 @@ export default function CollectionFilter({ collections = [], activeHandle = null
           <Link
             key={col.id || col.handle}
             to={`/catalog/${col.handle}`}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap border ${
+            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
               isActive
-                ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'
+                ? 'bg-[#FF2E4D] text-white border-[#FF2E4D] shadow-[0_0_12px_rgba(255,46,77,0.4)]'
+                : 'bg-slate-900/80 text-slate-300 border-white/10 hover:bg-slate-800 hover:text-white hover:border-white/20'
             }`}
           >
             {col.title}
@@ -39,3 +39,4 @@ export default function CollectionFilter({ collections = [], activeHandle = null
     </div>
   );
 }
+
