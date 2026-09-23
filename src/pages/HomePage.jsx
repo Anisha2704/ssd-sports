@@ -11,7 +11,6 @@ import StatsSection from '../components/StatsSection';
 import HomepageFeatureSection from '../components/HomepageFeatureSection';
 import InstagramCommunityGallery from '../components/InstagramCommunityGallery';
 import Footer from '../components/Footer';
-import CustomCursor from '../components/CustomCursor';
 import { useProducts } from '../hooks/useProducts';
 
 export default function HomePage() {
@@ -19,9 +18,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex flex-col font-sans selection:bg-[#FF2E4D] selection:text-white">
-      {/* Desktop Custom Glowing Cursor */}
-      <CustomCursor />
-
       {/* Navigation Header */}
       <Header />
 
