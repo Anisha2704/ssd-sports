@@ -56,22 +56,24 @@ export default function StatsSection() {
   const formattedCount = currentCount.toLocaleString();
 
   return (
-    <section ref={sectionRef} className="w-full bg-[#0B0F17] py-16 sm:py-24 border-b border-white/10 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,46,77,0.1)_0%,transparent_70%)] pointer-events-none" />
+    <section ref={sectionRef} className="w-full bg-gradient-to-b from-[#EAF7EE] via-white to-[#F5FAF6] py-16 sm:py-24 border-b border-[#D8E8DD] text-[#10231A] relative overflow-hidden cricket-grass-pattern">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(32,169,87,0.1)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-64 h-64 border-2 border-[#0B7A3B]/10 rounded-full pointer-events-none" />
+      <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-64 h-64 border-2 border-[#0B7A3B]/10 rounded-full pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           
-          {/* Main Shopify-driven Stat */}
+          {/* Main Stat: 1,000+ Happy Customers */}
           <ThreeDTiltCard>
-            <div className="bg-[#111827] border border-white/10 p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-xl">
-              <div className="font-heading text-5xl sm:text-6xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,46,77,0.4)]">
-                <span className="text-[#FF2E4D]">{formattedCount}</span>+
+            <div className="bg-white border border-[#D8E8DD] p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-md hover:shadow-xl hover:border-[#0B7A3B]/40 transition-all duration-300">
+              <div className="font-heading text-5xl sm:text-6xl lg:text-7xl font-black text-[#10231A] tracking-tight">
+                <span className="text-[#0B7A3B]">{formattedCount}</span>+
               </div>
-              <h3 className="text-base font-extrabold text-white tracking-widest uppercase font-heading">
+              <h3 className="text-base sm:text-lg font-black text-[#10231A] tracking-widest uppercase font-heading">
                 {statLabel}
               </h3>
-              <p className="text-xs text-slate-400 font-normal leading-relaxed">
+              <p className="text-xs text-[#52645A] font-medium leading-relaxed">
                 {statDescription}
               </p>
             </div>
@@ -79,14 +81,14 @@ export default function StatsSection() {
 
           {/* Secondary Match Grade Stat */}
           <ThreeDTiltCard>
-            <div className="bg-[#111827] border border-white/10 p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-xl">
-              <div className="font-heading text-5xl sm:text-6xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,46,77,0.4)]">
-                <span className="text-white">100</span>%
+            <div className="bg-white border border-[#D8E8DD] p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-md hover:shadow-xl hover:border-[#0B7A3B]/40 transition-all duration-300">
+              <div className="font-heading text-5xl sm:text-6xl lg:text-7xl font-black text-[#10231A] tracking-tight">
+                <span className="text-[#0B7A3B]">100</span>%
               </div>
-              <h3 className="text-base font-extrabold text-[#FF2E4D] tracking-widest uppercase font-heading">
+              <h3 className="text-base sm:text-lg font-black text-[#0B7A3B] tracking-widest uppercase font-heading">
                 MATCH GRADE WILLOW
               </h3>
-              <p className="text-xs text-slate-400 font-normal leading-relaxed">
+              <p className="text-xs text-[#52645A] font-medium leading-relaxed">
                 Hand-selected English & Kashmir willow clefts tested for balance & durability.
               </p>
             </div>
@@ -94,14 +96,14 @@ export default function StatsSection() {
 
           {/* Third Dispatch Stat */}
           <ThreeDTiltCard>
-            <div className="bg-[#111827] border border-white/10 p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-xl">
-              <div className="font-heading text-5xl sm:text-6xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,46,77,0.4)]">
-                <span className="text-white">24</span>/7
+            <div className="bg-white border border-[#D8E8DD] p-8 rounded-2xl space-y-2 h-full flex flex-col justify-center shadow-md hover:shadow-xl hover:border-[#0B7A3B]/40 transition-all duration-300">
+              <div className="font-heading text-5xl sm:text-6xl lg:text-7xl font-black text-[#10231A] tracking-tight">
+                <span className="text-[#0B7A3B]">24</span>/7
               </div>
-              <h3 className="text-base font-extrabold text-white tracking-widest uppercase font-heading">
+              <h3 className="text-base sm:text-lg font-black text-[#10231A] tracking-widest uppercase font-heading">
                 PAN-INDIA EXPRESS DELIVERY
               </h3>
-              <p className="text-xs text-slate-400 font-normal leading-relaxed">
+              <p className="text-xs text-[#52645A] font-medium leading-relaxed">
                 Fast dispatch with full order tracking across India & international destinations.
               </p>
             </div>

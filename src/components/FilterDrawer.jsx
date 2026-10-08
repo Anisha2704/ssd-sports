@@ -27,14 +27,14 @@ export default function FilterDrawer({
           {/* Header */}
           <div className="flex items-center justify-between border-b border-slate-100 pb-4">
             <div className="flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4 text-slate-900" />
-              <h2 className="font-extrabold text-base text-slate-900 uppercase tracking-tight">
+              <SlidersHorizontal className="w-4 h-4 text-[#0B7A3B]" />
+              <h2 className="font-extrabold text-base text-[#10231A] uppercase tracking-tight">
                 Filter &amp; Sort
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="p-1 rounded-full text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+              className="p-1 rounded-full text-[#7B8A82] hover:text-[#10231A] hover:bg-[#F5FAF6] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -42,7 +42,7 @@ export default function FilterDrawer({
 
           {/* Collections List */}
           <div className="space-y-3">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#7B8A82]">
               Collections
             </h3>
             <div className="space-y-1">
@@ -51,8 +51,8 @@ export default function FilterDrawer({
                 onClick={onClose}
                 className={`block px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
                   !activeHandle
-                    ? 'bg-slate-900 text-white'
-                    : 'text-slate-700 hover:bg-slate-50'
+                    ? 'bg-[#0B7A3B] text-white'
+                    : 'text-[#10231A] hover:bg-[#F5FAF6]'
                 }`}
               >
                 All Products
@@ -64,8 +64,8 @@ export default function FilterDrawer({
                   onClick={onClose}
                   className={`block px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
                     activeHandle === col.handle
-                      ? 'bg-slate-900 text-white'
-                      : 'text-slate-700 hover:bg-slate-50'
+                      ? 'bg-[#0B7A3B] text-white'
+                      : 'text-[#10231A] hover:bg-[#F5FAF6]'
                   }`}
                 >
                   {col.title}
@@ -75,8 +75,8 @@ export default function FilterDrawer({
           </div>
 
           {/* Sort By */}
-          <div className="space-y-3 pt-4 border-t border-slate-100">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
+          <div className="space-y-3 pt-4 border-t border-[#D8E8DD]">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#7B8A82]">
               Sort By
             </h3>
             <div className="space-y-1">
@@ -89,8 +89,8 @@ export default function FilterDrawer({
                   }}
                   className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
                     sortOption === opt.value
-                      ? 'bg-red-50 text-red-600 font-bold border border-red-200'
-                      : 'text-slate-700 hover:bg-slate-50'
+                      ? 'bg-[#EAF7EE] text-[#0B7A3B] font-bold border border-[#0B7A3B]/30'
+                      : 'text-[#10231A] hover:bg-[#F5FAF6]'
                   }`}
                 >
                   {opt.label}
@@ -101,10 +101,10 @@ export default function FilterDrawer({
         </div>
 
         {/* Apply / Close Button */}
-        <div className="pt-6 border-t border-slate-100">
+        <div className="pt-6 border-t border-[#D8E8DD]">
           <button
             onClick={onClose}
-            className="w-full py-3 bg-slate-900 hover:bg-black text-white text-xs font-bold uppercase rounded-full tracking-wider shadow-sm transition-colors"
+            className="w-full py-3 bg-[#0B7A3B] hover:bg-[#075E2D] text-white text-xs font-bold uppercase rounded-xl tracking-wider shadow-xs transition-colors"
           >
             Apply Filters
           </button>

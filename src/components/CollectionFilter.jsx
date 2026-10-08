@@ -10,10 +10,10 @@ export default function CollectionFilter({ collections = [], activeHandle = null
       {/* "All Products" Pill */}
       <Link
         to="/catalog"
-        className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
+        className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
           !activeHandle
-            ? 'bg-[#FF2E4D] text-white border-[#FF2E4D] shadow-[0_0_12px_rgba(255,46,77,0.4)]'
-            : 'bg-slate-900/80 text-slate-300 border-white/10 hover:bg-slate-800 hover:text-white hover:border-white/20'
+            ? 'bg-[#0B7A3B] text-white border-[#0B7A3B] shadow-xs'
+            : 'bg-[#F5FAF6] text-[#10231A] border-[#D8E8DD] hover:bg-[#EAF7EE] hover:text-[#0B7A3B] hover:border-[#0B7A3B]/40'
         }`}
       >
         All Products
@@ -26,10 +26,10 @@ export default function CollectionFilter({ collections = [], activeHandle = null
           <Link
             key={col.id || col.handle}
             to={`/catalog/${col.handle}`}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
               isActive
-                ? 'bg-[#FF2E4D] text-white border-[#FF2E4D] shadow-[0_0_12px_rgba(255,46,77,0.4)]'
-                : 'bg-slate-900/80 text-slate-300 border-white/10 hover:bg-slate-800 hover:text-white hover:border-white/20'
+                ? 'bg-[#0B7A3B] text-white border-[#0B7A3B] shadow-xs'
+                : 'bg-[#F5FAF6] text-[#10231A] border-[#D8E8DD] hover:bg-[#EAF7EE] hover:text-[#0B7A3B] hover:border-[#0B7A3B]/40'
             }`}
           >
             {col.title}

@@ -203,15 +203,15 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
   };
 
   return (
-    <section id="best-sellers" className="py-16 sm:py-24 bg-[#0B0F17] border-b border-white/10 text-white">
+    <section id="best-sellers" className="py-16 sm:py-24 bg-[#F5FAF6] border-b border-[#D8E8DD] text-[#10231A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto space-y-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#FF2E4D]">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#0B7A3B]">
             MATCH-WINNING GEAR
           </span>
-          <h2 className="font-heading text-3xl sm:text-5xl font-black text-white tracking-wider uppercase">
+          <h2 className="font-heading text-3xl sm:text-5xl font-black text-[#10231A] tracking-wider uppercase">
             Shop Our Best Sellers
           </h2>
         </div>
@@ -227,16 +227,16 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
             /* Loading Skeleton */
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((n) => (
-                <div key={n} className="bg-slate-900/80 border border-white/10 rounded-2xl p-4 animate-pulse space-y-4">
-                  <div className="bg-slate-800 aspect-square rounded-xl"></div>
-                  <div className="h-4 bg-slate-800 rounded w-3/4 mx-auto"></div>
-                  <div className="h-4 bg-slate-800 rounded w-1/2 mx-auto"></div>
-                  <div className="h-10 bg-slate-800 rounded-full w-3/4 mx-auto"></div>
+                <div key={n} className="bg-white border border-[#D8E8DD] rounded-2xl p-4 animate-pulse space-y-4">
+                  <div className="bg-[#F5FAF6] aspect-square rounded-xl"></div>
+                  <div className="h-4 bg-[#EAF7EE] rounded w-3/4 mx-auto"></div>
+                  <div className="h-4 bg-[#EAF7EE] rounded w-1/2 mx-auto"></div>
+                  <div className="h-10 bg-[#EAF7EE] rounded-xl w-3/4 mx-auto"></div>
                 </div>
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
+            <div className="text-center py-12 text-[#7B8A82]">
               No best sellers available at the moment.
             </div>
           ) : (
@@ -246,7 +246,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
               <button
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
+                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-[#10231A] shadow-md border border-[#D8E8DD] flex items-center justify-center z-20 hover:bg-[#0B7A3B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
@@ -257,7 +257,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
               <button
                 onClick={handleNext}
                 aria-label="Next product"
-                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
+                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-[#10231A] shadow-md border border-[#D8E8DD] flex items-center justify-center z-20 hover:bg-[#0B7A3B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
@@ -313,28 +313,28 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                       style={{ width: `${100 / visibleCount}%` }}
                       className="flex-shrink-0 px-2 sm:px-3"
                     >
-                      <div className="group bg-[#111827] rounded-2xl flex flex-col justify-between h-full border border-white/10 hover:border-[#FF2E4D]/40 transition-all duration-500 overflow-hidden hover:shadow-[0_12px_25px_rgba(255,46,77,0.15)]">
+                      <div className="group bg-white rounded-2xl flex flex-col justify-between h-full border border-[#D8E8DD] hover:border-[#0B7A3B]/40 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-[#0B7A3B]/10 hover:-translate-y-1.5">
                         
                         {/* Product Image Container */}
                         <Link
                           to={`/products/${product.handle}`}
-                          className="relative bg-[#1A2234] aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block overflow-hidden"
+                          className="relative bg-[#F5FAF6] aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block overflow-hidden border-b border-[#E2ECE6]"
                         >
                           {/* Badges in Top-Left */}
                           <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
                             {!isAvailable ? (
-                              <span className="bg-slate-900/90 text-slate-300 text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border border-white/10 tracking-wider">
+                              <span className="bg-[#10231A]/80 text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border border-[#D8E8DD]/20 tracking-wider">
                                 Out of Stock
                               </span>
                             ) : (
                               <>
                                 {isNewTag && (
-                                  <span className="bg-[#10b981] text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">
+                                  <span className="bg-[#20A957] text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full shadow-xs tracking-wide">
                                     New!
                                   </span>
                                 )}
                                 {hasCompareAt && discountPercent > 0 && (
-                                  <span className="bg-[#FF2E4D] text-white text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full shadow-sm">
+                                  <span className="bg-[#0B7A3B] text-white text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full shadow-xs">
                                     -{discountPercent}%
                                   </span>
                                 )}
@@ -350,11 +350,11 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                               toggleWishlist(product);
                             }}
                             aria-label={isFav ? "Remove from wishlist" : "Add to wishlist"}
-                            className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 flex items-center justify-center text-slate-300 hover:text-[#FF2E4D] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+                            className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-[#D8E8DD] flex items-center justify-center text-[#7B8A82] hover:text-[#0B7A3B] hover:border-[#0B7A3B] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shadow-xs"
                           >
                             <svg
                               className={`w-4 h-4 transition-colors ${
-                                isFav ? 'fill-[#FF2E4D] text-[#FF2E4D]' : 'fill-none stroke-current'
+                                isFav ? 'fill-[#0B7A3B] text-[#0B7A3B]' : 'fill-none stroke-current'
                               }`}
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -385,7 +385,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                               )}
                             </div>
                           ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
+                            <div className="w-full h-full flex flex-col items-center justify-center text-[#7B8A82]">
                               <span className="text-xs">No image</span>
                             </div>
                           )}
@@ -396,7 +396,7 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                           <div>
                             <Link
                               to={`/products/${product.handle}`}
-                              className="font-bold text-white text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-[#FF2E4D] transition-colors cursor-pointer min-h-[2.5rem] block"
+                              className="font-bold text-[#10231A] text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-[#0B7A3B] transition-colors cursor-pointer min-h-[2.5rem] block"
                               title={product.title}
                             >
                               {product.title}
@@ -405,11 +405,11 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
 
                           {/* Pricing */}
                           <div className="flex items-center justify-center gap-2.5 flex-wrap">
-                            <span className="text-[#FF2E4D] font-extrabold text-base sm:text-lg">
+                            <span className="text-[#0B7A3B] font-extrabold text-base sm:text-lg">
                               {formatINR(minPrice)}
                             </span>
                             {hasCompareAt && (
-                              <span className="text-slate-400 text-xs sm:text-sm line-through font-medium">
+                              <span className="text-[#7B8A82] text-xs sm:text-sm line-through font-medium">
                                 {formatINR(compareAtAmount)}
                               </span>
                             )}
@@ -436,12 +436,12 @@ export default function CategoryGrid({ products: propProducts, loading: propLoad
                                 }
                               }}
                               disabled={addingId === product.id || !isAvailable}
-                              className={`w-full py-2.5 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
+                              className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-xs flex items-center justify-center gap-2 cursor-pointer ${
                                 !isAvailable
-                                  ? 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed opacity-75'
+                                  ? 'bg-[#F5FAF6] text-[#7B8A82] border border-[#D8E8DD] cursor-not-allowed'
                                   : addedId === product.id
-                                  ? 'bg-emerald-600 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]'
-                                  : 'bg-[#FF2E4D] hover:bg-red-600 text-white shadow-[0_0_12px_rgba(255,46,77,0.35)] hover:scale-102 active:scale-95'
+                                  ? 'bg-[#075E2D] text-white shadow-md'
+                                  : 'bg-[#0B7A3B] hover:bg-[#075E2D] text-white shadow-md shadow-[#0B7A3B]/15 hover:-translate-y-0.5 active:translate-y-0'
                               }`}
                             >
                               {!isAvailable ? (

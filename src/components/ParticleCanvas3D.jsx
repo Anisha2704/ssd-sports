@@ -22,8 +22,8 @@ export default function ParticleCanvas3D() {
         y: Math.random() * height,
         z: Math.random() * 2 + 0.5, // 3D depth scale factor
         radius: Math.random() * 2 + 1,
-        color: Math.random() > 0.4 ? 'rgba(255, 46, 77, ' : 'rgba(255, 140, 0, ',
-        alpha: Math.random() * 0.6 + 0.2,
+        color: Math.random() > 0.4 ? 'rgba(11, 122, 59, ' : 'rgba(32, 169, 87, ',
+        alpha: Math.random() * 0.5 + 0.2,
         vx: (Math.random() - 0.5) * 0.4,
         vy: -Math.random() * 0.6 - 0.2,
       });
@@ -61,7 +61,7 @@ export default function ParticleCanvas3D() {
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
         ctx.fillStyle = p.color + p.alpha + ')';
         ctx.shadowBlur = 10;
-        ctx.shadowColor = '#FF2E4D';
+        ctx.shadowColor = '#0B7A3B';
         ctx.fill();
       });
 

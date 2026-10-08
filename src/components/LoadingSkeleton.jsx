@@ -6,18 +6,18 @@ export default function LoadingSkeleton() {
       {[1, 2, 3, 4, 5, 6].map((idx) => (
         <div
           key={idx}
-          className="bg-slate-900 border border-slate-800 rounded-xl p-5 animate-pulse space-y-4 shadow-lg"
+          className="bg-white border border-[#D8E8DD] rounded-xl p-5 animate-pulse space-y-4 shadow-sm"
         >
-          <div className="w-full h-56 bg-slate-800 rounded-lg"></div>
-          <div className="h-6 bg-slate-800 rounded w-3/4"></div>
-          <div className="h-4 bg-slate-800 rounded w-1/2"></div>
+          <div className="w-full h-56 bg-[#F5FAF6] rounded-lg"></div>
+          <div className="h-6 bg-[#F5FAF6] rounded w-3/4"></div>
+          <div className="h-4 bg-[#F5FAF6] rounded w-1/2"></div>
           <div className="space-y-2 pt-2">
-            <div className="h-3 bg-slate-800/70 rounded w-full"></div>
-            <div className="h-3 bg-slate-800/70 rounded w-5/6"></div>
+            <div className="h-3 bg-[#F5FAF6] rounded w-full"></div>
+            <div className="h-3 bg-[#F5FAF6] rounded w-5/6"></div>
           </div>
-          <div className="pt-4 flex justify-between items-center border-t border-slate-800">
-            <div className="h-6 bg-slate-800 rounded w-24"></div>
-            <div className="h-6 bg-slate-800 rounded w-16"></div>
+          <div className="pt-4 flex justify-between items-center border-t border-[#D8E8DD]">
+            <div className="h-6 bg-[#EAF7EE] rounded w-24"></div>
+            <div className="h-6 bg-[#F5FAF6] rounded w-16"></div>
           </div>
         </div>
       ))}

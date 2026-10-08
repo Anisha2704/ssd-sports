@@ -52,12 +52,12 @@ export default function Hero3DBat({ fallbackImage }) {
     keyLight.castShadow = true;
     scene.add(keyLight);
 
-    // Crimson / Orange Rim Spotlight for sports aesthetic
-    const rimLight = new THREE.SpotLight(0xff2e4d, 5, 10, Math.PI / 4, 0.5);
+    // Cricket Field Green Rim Spotlight for sports aesthetic
+    const rimLight = new THREE.SpotLight(0x0B7A3B, 4, 10, Math.PI / 4, 0.5);
     rimLight.position.set(-5, -2, -2);
     scene.add(rimLight);
 
-    const topFill = new THREE.DirectionalLight(0xff7733, 1.2);
+    const topFill = new THREE.DirectionalLight(0x20A957, 1.2);
     topFill.position.set(0, 6, 2);
     scene.add(topFill);
 
@@ -82,8 +82,8 @@ export default function Hero3DBat({ fallbackImage }) {
         ctx.bezierCurveTo(i + 10, 300, i - 10, 700, i + 5, 1024);
         ctx.stroke();
       }
-      // Red brand stripes
-      ctx.fillStyle = '#FF2E4D';
+      // Cricket green brand stripes
+      ctx.fillStyle = '#0B7A3B';
       ctx.fillRect(40, 650, 432, 70);
       ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 36px sans-serif';
@@ -114,7 +114,7 @@ export default function Hero3DBat({ fallbackImage }) {
     // B) Handle Cone & Handle (Grip Texture)
     const handleGeo = new THREE.CylinderGeometry(0.11, 0.13, 1.6, 24);
     const gripMaterial = new THREE.MeshStandardMaterial({
-      color: 0x111827,
+      color: 0x10231A,
       roughness: 0.8,
       metalness: 0.2,
     });
@@ -125,14 +125,14 @@ export default function Hero3DBat({ fallbackImage }) {
 
     // C) Handle Rubber Top Knob
     const knobGeo = new THREE.CylinderGeometry(0.16, 0.12, 0.15, 24);
-    const knobMat = new THREE.MeshStandardMaterial({ color: 0xff2e4d, roughness: 0.4 });
+    const knobMat = new THREE.MeshStandardMaterial({ color: 0x0B7A3B, roughness: 0.4 });
     const knobMesh = new THREE.Mesh(knobGeo, knobMat);
     knobMesh.position.set(0, 2.75, 0);
     batGroup.add(knobMesh);
 
-    // D) Crimson Shoulder Decal Rings
+    // D) Cricket Green Shoulder Decal Rings
     const ringGeo = new THREE.CylinderGeometry(0.18, 0.22, 0.25, 24);
-    const ringMat = new THREE.MeshStandardMaterial({ color: 0xff2e4d, roughness: 0.2, metalness: 0.4 });
+    const ringMat = new THREE.MeshStandardMaterial({ color: 0x0B7A3B, roughness: 0.2, metalness: 0.4 });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
     ringMesh.position.set(0, 1.1, 0);
     batGroup.add(ringMesh);

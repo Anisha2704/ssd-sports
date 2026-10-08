@@ -226,18 +226,19 @@ export default function NewArrivals({ onQuickView }) {
   };
 
   return (
-    <section id="new-arrivals" className="py-16 sm:py-24 bg-[#0B0F17] border-b border-white/10 text-white">
+    <section id="new-arrivals" className="py-16 sm:py-24 bg-white border-b border-[#D8E8DD] text-[#10231A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto space-y-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#FF2E4D]">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#0B7A3B]">
             JUST RELEASED
           </span>
-          <h2 className="font-heading text-3xl sm:text-5xl font-black text-white tracking-wider uppercase">
+          <h2 className="font-heading text-3xl sm:text-5xl font-black text-[#10231A] tracking-wider uppercase">
             {collection?.title || 'New Arrivals'}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 font-normal">
+          <div className="w-16 h-1 bg-[#0B7A3B] mx-auto rounded-full my-3" />
+          <p className="text-xs sm:text-sm text-[#52645A] font-medium">
             {collection?.description || 'Explore our newest high-performance cricket gear and equipment.'}
           </p>
         </div>
@@ -253,22 +254,22 @@ export default function NewArrivals({ onQuickView }) {
             /* Skeleton Loading */
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[1, 2, 3, 4].map((n) => (
-                <div key={n} className="bg-slate-900 border border-white/10 rounded-2xl p-4 animate-pulse space-y-4">
-                  <div className="bg-slate-800 aspect-square rounded-2xl w-full"></div>
-                  <div className="h-4 bg-slate-800 rounded w-3/4 mx-auto"></div>
-                  <div className="h-4 bg-slate-800 rounded w-1/2 mx-auto"></div>
-                  <div className="h-10 bg-slate-800 rounded-full w-3/4 mx-auto"></div>
+                <div key={n} className="bg-white border border-[#D8E8DD] rounded-2xl p-4 animate-pulse space-y-4">
+                  <div className="bg-[#F5FAF6] aspect-square rounded-2xl w-full"></div>
+                  <div className="h-4 bg-[#EAF7EE] rounded w-3/4 mx-auto"></div>
+                  <div className="h-4 bg-[#EAF7EE] rounded w-1/2 mx-auto"></div>
+                  <div className="h-10 bg-[#EAF7EE] rounded-xl w-3/4 mx-auto"></div>
                 </div>
               ))}
             </div>
           ) : error ? (
             /* Technical Error Fallback */
-            <div className="text-center py-12 text-slate-400 text-sm font-medium">
+            <div className="text-center py-12 text-[#7B8A82] text-sm font-medium">
               {error}
             </div>
           ) : products.length === 0 ? (
             /* Empty Collection Fallback */
-            <div className="text-center py-12 text-slate-400 text-sm font-medium">
+            <div className="text-center py-12 text-[#7B8A82] text-sm font-medium">
               New arrivals coming soon.
             </div>
           ) : (
@@ -279,7 +280,7 @@ export default function NewArrivals({ onQuickView }) {
               <button
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
+                className="absolute left-2 sm:left-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-[#10231A] shadow-md border border-[#D8E8DD] flex items-center justify-center z-20 hover:bg-[#0B7A3B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
@@ -290,7 +291,7 @@ export default function NewArrivals({ onQuickView }) {
               <button
                 onClick={handleNext}
                 aria-label="Next product"
-                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 text-white shadow-2xl border border-white/15 flex items-center justify-center z-20 hover:bg-[#FF2E4D] hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
+                className="absolute right-2 sm:right-4 top-[40%] -translate-y-1/2 w-11 h-11 rounded-full bg-white text-[#10231A] shadow-md border border-[#D8E8DD] flex items-center justify-center z-20 hover:bg-[#0B7A3B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />

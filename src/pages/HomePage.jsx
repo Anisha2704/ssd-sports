@@ -17,7 +17,7 @@ export default function HomePage() {
   const { products, loading } = useProducts({ first: 20 });
 
   return (
-    <div className="min-h-screen bg-[#0B0F17] text-slate-100 flex flex-col font-sans selection:bg-[#FF2E4D] selection:text-white">
+    <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans selection:bg-[#0B7A3B] selection:text-white">
       {/* Navigation Header */}
       <Header />
 

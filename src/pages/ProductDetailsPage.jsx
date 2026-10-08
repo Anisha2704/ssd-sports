@@ -205,25 +205,25 @@ export default function ProductDetailsPage() {
   // Loading Skeleton State
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F17] text-white flex flex-col font-sans">
+      <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans">
         <Header />
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-pulse">
-          <div className="h-4 bg-slate-900 rounded w-1/4"></div>
+          <div className="h-4 bg-[#F5FAF6] border border-[#D8E8DD] rounded w-1/4"></div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-4">
             <div className="space-y-4">
-              <div className="bg-slate-900 border border-white/10 rounded-2xl aspect-square w-full"></div>
+              <div className="bg-[#F5FAF6] border border-[#D8E8DD] rounded-2xl aspect-square w-full"></div>
               <div className="flex gap-3">
-                <div className="bg-slate-900 rounded-lg w-20 h-20"></div>
-                <div className="bg-slate-900 rounded-lg w-20 h-20"></div>
-                <div className="bg-slate-900 rounded-lg w-20 h-20"></div>
+                <div className="bg-[#F5FAF6] border border-[#D8E8DD] rounded-lg w-20 h-20"></div>
+                <div className="bg-[#F5FAF6] border border-[#D8E8DD] rounded-lg w-20 h-20"></div>
+                <div className="bg-[#F5FAF6] border border-[#D8E8DD] rounded-lg w-20 h-20"></div>
               </div>
             </div>
             <div className="space-y-6">
-              <div className="h-8 bg-slate-900 rounded w-3/4"></div>
-              <div className="h-6 bg-slate-900 rounded w-1/3"></div>
-              <div className="h-24 bg-slate-900 rounded w-full"></div>
-              <div className="h-12 bg-slate-900 rounded w-1/2"></div>
-              <div className="h-12 bg-slate-900 rounded w-full"></div>
+              <div className="h-8 bg-[#F5FAF6] border border-[#D8E8DD] rounded w-3/4"></div>
+              <div className="h-6 bg-[#F5FAF6] border border-[#D8E8DD] rounded w-1/3"></div>
+              <div className="h-24 bg-[#F5FAF6] border border-[#D8E8DD] rounded w-full"></div>
+              <div className="h-12 bg-[#F5FAF6] border border-[#D8E8DD] rounded w-1/2"></div>
+              <div className="h-12 bg-[#F5FAF6] border border-[#D8E8DD] rounded w-full"></div>
             </div>
           </div>
         </main>
@@ -235,19 +235,19 @@ export default function ProductDetailsPage() {
   // Error State
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0B0F17] text-white flex flex-col font-sans">
+      <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans">
         <Header />
         <main className="flex-1 max-w-xl w-full mx-auto px-4 py-20 text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-red-950 text-[#FF2E4D] border border-red-800 mx-auto flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-red-50 text-red-600 border border-red-200 mx-auto flex items-center justify-center">
             <AlertCircle className="w-8 h-8" />
           </div>
           <div className="space-y-2">
-            <h1 className="text-2xl font-extrabold text-white">Failed to Load Product</h1>
-            <p className="text-slate-400 text-sm">{error}</p>
+            <h1 className="text-2xl font-extrabold text-[#10231A]">Failed to Load Product</h1>
+            <p className="text-[#52645A] text-sm">{error}</p>
           </div>
           <button
             onClick={refetch}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF2E4D] hover:bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full transition-all shadow-md cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#0B7A3B] hover:bg-[#075E2D] text-white text-xs font-bold uppercase tracking-wider rounded-full transition-all shadow-md shadow-[#0B7A3B]/20 cursor-pointer"
           >
             <RefreshCw className="w-4 h-4" />
             <span>Try Again</span>
@@ -261,22 +261,22 @@ export default function ProductDetailsPage() {
   // Product Not Found State
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#0B0F17] text-white flex flex-col font-sans">
+      <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans">
         <Header />
         <main className="flex-1 max-w-xl w-full mx-auto px-4 py-20 text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-slate-900 text-slate-400 border border-white/10 mx-auto flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-[#EAF7EE] text-[#0B7A3B] border border-[#D8E8DD] mx-auto flex items-center justify-center">
             <ShoppingBag className="w-8 h-8 stroke-[1.5]" />
           </div>
           <div className="space-y-2">
-            <h1 className="font-heading text-2xl font-black text-white uppercase tracking-wider">Product Not Found</h1>
-            <p className="text-slate-400 text-sm">
+            <h1 className="font-heading text-2xl font-black text-[#10231A] uppercase tracking-wider">Product Not Found</h1>
+            <p className="text-[#52645A] text-sm">
               The product you are looking for does not exist or may have been removed from our catalog.
             </p>
           </div>
           <div>
             <Link
               to="/catalog"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF2E4D] hover:bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider rounded-full transition-all shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0B7A3B] hover:bg-[#075E2D] text-white font-extrabold text-xs uppercase tracking-wider rounded-full transition-all shadow-lg shadow-[#0B7A3B]/20"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Catalog</span>
@@ -291,37 +291,37 @@ export default function ProductDetailsPage() {
   const currentMainImage = images[selectedImageIndex] || images[0] || product.featuredImage;
 
   return (
-    <div className="min-h-screen bg-[#0B0F17] text-white flex flex-col font-sans">
+    <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans">
       <Header />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-12">
         
         {/* 1. Breadcrumbs */}
-        <nav aria-label="Breadcrumb" className="flex items-center text-xs font-semibold text-slate-400 space-x-2">
-          <Link to="/" className="hover:text-white transition-colors">
+        <nav aria-label="Breadcrumb" className="flex items-center text-xs font-semibold text-[#52645A] space-x-2">
+          <Link to="/" className="hover:text-[#0B7A3B] transition-colors">
             Home
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-          <Link to="/catalog" className="hover:text-white transition-colors">
+          <ChevronRight className="w-3.5 h-3.5 text-[#7B8A82]" />
+          <Link to="/catalog" className="hover:text-[#0B7A3B] transition-colors">
             Catalog
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-          <span className="text-[#FF2E4D] font-bold truncate max-w-[240px] sm:max-w-md">
+          <ChevronRight className="w-3.5 h-3.5 text-[#7B8A82]" />
+          <span className="text-[#0B7A3B] font-bold truncate max-w-[240px] sm:max-w-md">
             {product.title}
           </span>
         </nav>
 
         {/* Success Toast Floating Alert */}
         {addedToast && (
-          <div className="fixed bottom-6 right-6 z-50 bg-slate-900/95 backdrop-blur-md text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-white/15 flex items-center gap-3 animate-slide-up">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <div className="fixed bottom-6 right-6 z-50 bg-white text-[#10231A] px-5 py-3.5 rounded-2xl shadow-xl border border-[#D8E8DD] flex items-center gap-3 animate-slide-up">
+            <CheckCircle2 className="w-5 h-5 text-[#0B7A3B] shrink-0" />
             <div className="text-xs">
-              <p className="font-bold text-white">Added to cart!</p>
-              <p className="text-slate-400">{product.title} (x{quantity})</p>
+              <p className="font-bold text-[#10231A]">Added to cart!</p>
+              <p className="text-[#52645A]">{product.title} (x{quantity})</p>
             </div>
             <Link
               to="/cart"
-              className="ml-3 text-xs font-bold text-[#FF2E4D] hover:underline shrink-0"
+              className="ml-3 text-xs font-extrabold text-[#0B7A3B] hover:underline shrink-0"
             >
               View Cart
             </Link>
@@ -335,17 +335,17 @@ export default function ProductDetailsPage() {
           <div className="lg:col-span-7 flex flex-col space-y-4">
             
             {/* Main Product Display Container */}
-            <div className="relative bg-[#1A2234] rounded-3xl overflow-hidden aspect-[4/5] sm:aspect-square flex items-center justify-center p-6 border border-white/10 group shadow-2xl">
+            <div className="relative bg-[#F5FAF6] rounded-3xl overflow-hidden aspect-[4/5] sm:aspect-square flex items-center justify-center p-6 border border-[#D8E8DD] group shadow-sm">
               
               {/* Badges */}
               <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
                 {product.vendor && (
-                  <span className="bg-slate-950/90 border border-white/15 text-slate-200 text-[11px] font-mono font-extrabold uppercase px-3 py-1 rounded-full shadow-sm tracking-wider">
+                  <span className="bg-white/95 border border-[#D8E8DD] text-[#10231A] text-[11px] font-mono font-extrabold uppercase px-3 py-1 rounded-full shadow-xs tracking-wider">
                     {product.vendor}
                   </span>
                 )}
                 {hasDiscount && discountPercent > 0 && (
-                  <span className="bg-[#FF2E4D] text-white text-[11px] font-black font-mono px-3 py-1 rounded-full shadow-sm">
+                  <span className="bg-[#0B7A3B] text-white text-[11px] font-black font-mono px-3 py-1 rounded-full shadow-xs">
                     -{discountPercent}% OFF
                   </span>
                 )}
@@ -359,7 +359,7 @@ export default function ProductDetailsPage() {
                   className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-slate-500 space-y-2">
+                <div className="flex flex-col items-center justify-center text-[#7B8A82] space-y-2">
                   <ShoppingBag className="w-12 h-12 stroke-1" />
                   <span className="text-xs">No image available</span>
                 </div>
@@ -375,10 +375,10 @@ export default function ProductDetailsPage() {
                     <button
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 bg-[#1A2234] shrink-0 transition-all duration-200 snap-start p-1 cursor-pointer ${
+                      className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 bg-[#F5FAF6] shrink-0 transition-all duration-200 snap-start p-1 cursor-pointer ${
                         isSelected
-                          ? 'border-[#FF2E4D] shadow-lg scale-105'
-                          : 'border-white/10 hover:border-white/30 opacity-70 hover:opacity-100'
+                          ? 'border-[#0B7A3B] bg-[#EAF7EE] shadow-sm scale-105'
+                          : 'border-[#D8E8DD] hover:border-[#0B7A3B]/40 opacity-80 hover:opacity-100'
                       }`}
                       aria-label={`View image ${index + 1}`}
                     >
@@ -403,37 +403,37 @@ export default function ProductDetailsPage() {
                 <span
                   className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
                     isAvailable
-                      ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'
-                      : 'bg-red-950/80 text-red-400 border border-red-800'
+                      ? 'bg-[#EAF7EE] text-[#0B7A3B] border border-[#0B7A3B]/30'
+                      : 'bg-red-50 text-red-600 border border-red-200'
                   }`}
                 >
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      isAvailable ? 'bg-emerald-400 animate-pulse' : 'bg-red-500'
+                      isAvailable ? 'bg-[#0B7A3B] animate-pulse' : 'bg-red-500'
                     }`}
                   ></span>
                   {isAvailable ? 'In Stock' : 'Currently Unavailable'}
                 </span>
 
                 {product.category?.name && (
-                  <span className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider">
+                  <span className="text-xs font-mono font-bold text-[#7B8A82] uppercase tracking-wider">
                     {product.category.name}
                   </span>
                 )}
               </div>
 
               <div className="flex items-start justify-between gap-4">
-                <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-wider uppercase leading-snug">
+                <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-[#10231A] tracking-wider uppercase leading-snug">
                   {product.title}
                 </h1>
                 <button
                   onClick={() => toggleWishlist(product)}
                   aria-label={isFav ? "Remove from wishlist" : "Add to wishlist"}
-                  className="w-10 h-10 rounded-full bg-slate-900 hover:bg-slate-800 border border-white/15 shadow-sm flex items-center justify-center text-slate-300 hover:text-[#FF2E4D] hover:scale-110 active:scale-95 transition-all shrink-0 mt-1 cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-[#F5FAF6] hover:bg-[#EAF7EE] border border-[#D8E8DD] flex items-center justify-center text-[#7B8A82] hover:text-[#0B7A3B] hover:border-[#0B7A3B] hover:scale-110 active:scale-95 transition-all shrink-0 mt-1 cursor-pointer shadow-xs"
                 >
                   <Heart
                     className={`w-5 h-5 transition-colors ${
-                      isFav ? 'fill-[#FF2E4D] text-[#FF2E4D]' : 'fill-none stroke-current'
+                      isFav ? 'fill-[#0B7A3B] text-[#0B7A3B]' : 'fill-none stroke-current'
                     }`}
                     strokeWidth={2}
                   />
@@ -442,12 +442,12 @@ export default function ProductDetailsPage() {
             </div>
 
             {/* Price Display */}
-            <div className="flex items-baseline gap-3 pt-1 border-t border-white/10">
-              <span className="text-3xl font-black text-[#FF2E4D] tracking-tight font-mono">
+            <div className="flex items-baseline gap-3 pt-1 border-t border-[#D8E8DD]">
+              <span className="text-3xl sm:text-4xl font-black text-[#0B7A3B] tracking-tight font-mono">
                 {formatINR(numCurrentPrice)}
               </span>
               {hasDiscount && (
-                <span className="text-base text-slate-400 line-through font-medium font-mono">
+                <span className="text-base text-[#7B8A82] line-through font-medium font-mono">
                   {formatINR(numCompareAtPrice)}
                 </span>
               )}
@@ -456,34 +456,34 @@ export default function ProductDetailsPage() {
             {/* Product Rich Text Description */}
             {product.descriptionHtml && (
               <div
-                className="text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-white/10 pt-4 prose prose-invert max-w-none [&_p]:mb-2 [&_strong]:text-white [&_ul]:list-disc [&_ul]:pl-5"
+                className="text-[#52645A] text-xs sm:text-sm leading-relaxed border-t border-[#D8E8DD] pt-4 prose max-w-none [&_p]:mb-2 [&_strong]:text-[#10231A] [&_ul]:list-disc [&_ul]:pl-5 font-medium"
                 dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
               />
             )}
 
-            {/* Dynamic Variant Selectors */}
+            {/* Dynamic Variant Selectors (Clear visual UI for Mongoos Bat weights etc.) */}
             {visibleOptions && visibleOptions.length > 0 && (
-              <div className="space-y-4 border-t border-white/10 pt-4">
+              <div className="space-y-4 border-t border-[#D8E8DD] pt-4">
                 {visibleOptions.map((option) => (
                   <div key={option.id} className="space-y-2">
-                    <div className="flex items-center justify-between text-xs font-bold text-white uppercase tracking-wider">
-                      <span>{option.name}</span>
-                      <span className="text-slate-400 font-normal">
+                    <div className="flex items-center justify-between text-xs font-bold text-[#10231A] uppercase tracking-wider">
+                      <span>Select {option.name}</span>
+                      <span className="text-[#0B7A3B] font-extrabold">
                         {selectedOptions[option.name] || 'Select'}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2.5">
                       {option.values.map((val) => {
                         const isSelected = selectedOptions[option.name] === val;
                         return (
                           <button
                             key={val}
                             onClick={() => handleOptionChange(option.name, val)}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 border cursor-pointer ${
+                            className={`px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all duration-200 border cursor-pointer ${
                               isSelected
-                                ? 'bg-[#FF2E4D] text-white border-[#FF2E4D] shadow-[0_0_12px_rgba(255,46,77,0.4)] scale-105'
-                                : 'bg-slate-900 text-slate-300 border-white/10 hover:bg-slate-800 hover:border-white/20'
+                                ? 'bg-[#EAF7EE] text-[#0B7A3B] border-2 border-[#0B7A3B] shadow-sm scale-102'
+                                : 'bg-[#F5FAF6] text-[#10231A] border-[#D8E8DD] hover:bg-[#EAF7EE] hover:text-[#0B7A3B] hover:border-[#0B7A3B]/40'
                             }`}
                           >
                             {val}
@@ -498,33 +498,33 @@ export default function ProductDetailsPage() {
 
             {/* Unavailable variant warning notice */}
             {selectedVariant && !isAvailable && (
-              <div className="p-3.5 bg-amber-950/80 border border-amber-800 rounded-2xl flex items-center gap-2.5 text-xs text-amber-200 font-medium">
-                <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+              <div className="p-3.5 bg-red-50 border border-red-200 rounded-2xl flex items-center gap-2.5 text-xs text-red-700 font-medium">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                 <span>The selected option combination is currently out of stock.</span>
               </div>
             )}
 
             {/* Quantity Selector & Action Buttons */}
-            <div className="space-y-4 border-t border-white/10 pt-4">
+            <div className="space-y-4 border-t border-[#D8E8DD] pt-4">
               <div className="flex items-center gap-4">
-                <span className="text-xs font-bold text-white uppercase tracking-wider">Quantity</span>
-                <div className="flex items-center bg-slate-900 border border-white/15 rounded-xl p-1">
+                <span className="text-xs font-bold text-[#10231A] uppercase tracking-wider">Quantity</span>
+                <div className="flex items-center bg-[#F5FAF6] border border-[#D8E8DD] rounded-xl p-1">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     disabled={quantity <= 1 || !isAvailable}
                     aria-label="Decrease quantity"
-                    className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-white hover:bg-[#FF2E4D] disabled:opacity-40 disabled:hover:bg-slate-800 transition-colors cursor-pointer"
+                    className="w-8 h-8 rounded-lg bg-white border border-[#D8E8DD] flex items-center justify-center text-[#10231A] hover:bg-[#0B7A3B] hover:text-white disabled:opacity-40 transition-colors cursor-pointer"
                   >
                     <Minus className="w-3.5 h-3.5" />
                   </button>
-                  <span className="w-10 text-center font-bold text-xs font-mono text-white">
+                  <span className="w-10 text-center font-bold text-xs font-mono text-[#10231A]">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity((q) => q + 1)}
                     disabled={!isAvailable}
                     aria-label="Increase quantity"
-                    className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-white hover:bg-[#FF2E4D] disabled:opacity-40 disabled:hover:bg-slate-800 transition-colors cursor-pointer"
+                    className="w-8 h-8 rounded-lg bg-white border border-[#D8E8DD] flex items-center justify-center text-[#10231A] hover:bg-[#0B7A3B] hover:text-white disabled:opacity-40 transition-colors cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                   </button>
@@ -536,7 +536,7 @@ export default function ProductDetailsPage() {
                 <button
                   onClick={handleAddToCart}
                   disabled={!isAvailable || addingItem}
-                  className="w-full py-4 px-6 rounded-2xl bg-slate-900 border border-white/20 text-white font-extrabold text-xs uppercase tracking-wider hover:bg-slate-800 hover:border-white/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full py-4 px-6 rounded-xl bg-white border-2 border-[#0B7A3B] text-[#0B7A3B] font-extrabold text-xs uppercase tracking-wider hover:bg-[#EAF7EE] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                 >
                   {addingItem ? (
                     <>
@@ -554,7 +554,7 @@ export default function ProductDetailsPage() {
                 <button
                   onClick={handleBuyNow}
                   disabled={!isAvailable || addingItem}
-                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-[#FF2E4D] hover:from-red-500 hover:to-[#FF4763] text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,46,77,0.35)] cursor-pointer"
+                  className="w-full py-4 px-6 rounded-xl bg-[#0B7A3B] hover:bg-[#075E2D] text-white font-extrabold text-xs uppercase tracking-wider transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#0B7A3B]/20 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Buy Now</span>
@@ -563,21 +563,21 @@ export default function ProductDetailsPage() {
             </div>
 
             {/* Value Highlights */}
-            <div className="grid grid-cols-3 gap-3 border-t border-white/10 pt-6 text-center">
-              <div className="p-3 bg-slate-900/80 border border-white/10 rounded-2xl space-y-1">
-                <Truck className="w-5 h-5 text-[#FF2E4D] mx-auto" />
-                <p className="text-[11px] font-bold text-white">Fast Shipping</p>
-                <p className="text-[10px] text-slate-400">Pan India Delivery</p>
+            <div className="grid grid-cols-3 gap-3 border-t border-[#D8E8DD] pt-6 text-center">
+              <div className="p-3 bg-[#F5FAF6] border border-[#D8E8DD] rounded-2xl space-y-1">
+                <Truck className="w-5 h-5 text-[#0B7A3B] mx-auto" />
+                <p className="text-[11px] font-bold text-[#10231A]">Fast Shipping</p>
+                <p className="text-[10px] text-[#7B8A82]">Pan India Delivery</p>
               </div>
-              <div className="p-3 bg-slate-900/80 border border-white/10 rounded-2xl space-y-1">
-                <ShieldCheck className="w-5 h-5 text-[#FF2E4D] mx-auto" />
-                <p className="text-[11px] font-bold text-white">100% Authentic</p>
-                <p className="text-[10px] text-slate-400">Direct from SSD</p>
+              <div className="p-3 bg-[#F5FAF6] border border-[#D8E8DD] rounded-2xl space-y-1">
+                <ShieldCheck className="w-5 h-5 text-[#0B7A3B] mx-auto" />
+                <p className="text-[11px] font-bold text-[#10231A]">100% Authentic</p>
+                <p className="text-[10px] text-[#7B8A82]">Direct from SSD</p>
               </div>
-              <div className="p-3 bg-slate-900/80 border border-white/10 rounded-2xl space-y-1">
-                <RotateCcw className="w-5 h-5 text-[#FF2E4D] mx-auto" />
-                <p className="text-[11px] font-bold text-white">Easy Returns</p>
-                <p className="text-[10px] text-slate-400">Hassle Free Policy</p>
+              <div className="p-3 bg-[#F5FAF6] border border-[#D8E8DD] rounded-2xl space-y-1">
+                <RotateCcw className="w-5 h-5 text-[#0B7A3B] mx-auto" />
+                <p className="text-[11px] font-bold text-[#10231A]">Easy Returns</p>
+                <p className="text-[10px] text-[#7B8A82]">Hassle Free Policy</p>
               </div>
             </div>
 
@@ -586,20 +586,20 @@ export default function ProductDetailsPage() {
 
         {/* 3. Product Specifications Table */}
         {specifications.length > 0 && (
-          <div className="border-t border-white/10 pt-10 space-y-6">
-            <h2 className="font-heading text-xl sm:text-2xl font-black text-white uppercase tracking-wider">
+          <div className="border-t border-[#D8E8DD] pt-10 space-y-6">
+            <h2 className="font-heading text-xl sm:text-2xl font-black text-[#10231A] uppercase tracking-wider">
               Product Specifications
             </h2>
 
-            <div className="bg-slate-900/80 rounded-3xl border border-white/10 overflow-hidden max-w-3xl">
-              <dl className="divide-y divide-white/10">
+            <div className="bg-[#F5FAF6] rounded-3xl border border-[#D8E8DD] overflow-hidden max-w-3xl">
+              <dl className="divide-y divide-[#D8E8DD]">
                 {specifications.map((spec, index) => (
                   <div
                     key={index}
-                    className="px-6 py-4 grid grid-cols-3 gap-4 hover:bg-slate-800/50 transition-colors"
+                    className="px-6 py-4 grid grid-cols-3 gap-4 hover:bg-[#EAF7EE]/50 transition-colors"
                   >
-                    <dt className="text-xs font-bold uppercase tracking-wider text-slate-400">{spec.label}</dt>
-                    <dd className="text-xs font-semibold text-white col-span-2">{spec.value}</dd>
+                    <dt className="text-xs font-bold uppercase tracking-wider text-[#7B8A82]">{spec.label}</dt>
+                    <dd className="text-xs font-semibold text-[#10231A] col-span-2">{spec.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -609,14 +609,14 @@ export default function ProductDetailsPage() {
 
         {/* 4. Related Products Section ("YOU MAY ALSO LIKE") */}
         {relatedProducts.length > 0 && (
-          <div className="border-t border-white/10 pt-12 space-y-6">
+          <div className="border-t border-[#D8E8DD] pt-12 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="font-heading text-xl sm:text-2xl font-black text-white uppercase tracking-wider">
+              <h2 className="font-heading text-xl sm:text-2xl font-black text-[#10231A] uppercase tracking-wider">
                 You May Also Like
               </h2>
               <Link
                 to="/catalog"
-                className="text-xs font-bold uppercase tracking-wider text-[#FF2E4D] hover:underline transition-colors"
+                className="text-xs font-bold uppercase tracking-wider text-[#0B7A3B] hover:underline transition-colors"
               >
                 View Catalog &rarr;
               </Link>

@@ -107,26 +107,26 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="group bg-[#111827] rounded-2xl flex flex-col justify-between h-full border border-white/10 hover:border-[#FF2E4D]/40 hover:shadow-[0_12px_30px_rgba(255,46,77,0.15)] transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+    <div className="group bg-white rounded-2xl flex flex-col justify-between h-full border border-[#D8E8DD] hover:border-[#0B7A3B]/40 hover:shadow-xl hover:shadow-[#0B7A3B]/10 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden">
       
-      {/* Product Image Area with Dark Frame -> Links to Product Details Page */}
-      <Link to={productUrl} className="relative bg-[#1A2234] aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block overflow-hidden">
+      {/* Product Image Area with Light Fresh Frame */}
+      <Link to={productUrl} className="relative bg-[#F5FAF6] aspect-[4/5] sm:aspect-square flex items-center justify-center p-4 block overflow-hidden border-b border-[#E2ECE6]">
         
         {/* Badges Top-Left */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
           {!isAvailable ? (
-            <span className="bg-slate-900/90 text-slate-300 text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border border-white/10 tracking-wider">
+            <span className="bg-[#10231A]/80 text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border border-[#D8E8DD]/20 tracking-wider">
               Out of Stock
             </span>
           ) : (
             <>
               {isNewTag && (
-                <span className="bg-[#10b981] text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">
+                <span className="bg-[#20A957] text-white text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full shadow-xs tracking-wide">
                   New!
                 </span>
               )}
               {hasCompareAt && discountPercent > 0 && (
-                <span className="bg-[#FF2E4D] text-white text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full shadow-sm">
+                <span className="bg-[#0B7A3B] text-white text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full shadow-xs">
                   -{discountPercent}%
                 </span>
               )}
@@ -142,11 +142,11 @@ export default function ProductCard({ product }) {
             toggleWishlist(product);
           }}
           aria-label={isFav ? "Remove from wishlist" : "Add to wishlist"}
-          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 flex items-center justify-center text-slate-300 hover:text-[#FF2E4D] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-[#D8E8DD] flex items-center justify-center text-[#7B8A82] hover:text-[#0B7A3B] hover:border-[#0B7A3B] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shadow-xs"
         >
           <Heart
             className={`w-4 h-4 transition-colors ${
-              isFav ? 'fill-[#FF2E4D] text-[#FF2E4D]' : 'fill-none stroke-current'
+              isFav ? 'fill-[#0B7A3B] text-[#0B7A3B]' : 'fill-none stroke-current'
             }`}
             strokeWidth={2}
           />
@@ -176,7 +176,7 @@ export default function ProductCard({ product }) {
             )}
           </div>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
+          <div className="w-full h-full flex flex-col items-center justify-center text-[#7B8A82]">
             <span className="text-xs">No image available</span>
           </div>
         )}
@@ -185,10 +185,10 @@ export default function ProductCard({ product }) {
       {/* Info below image */}
       <div className="p-4 flex flex-col flex-1 justify-between text-center space-y-3">
         <div>
-          {/* Product Title -> Links to Product Details Page */}
+          {/* Product Title */}
           <Link
             to={productUrl}
-            className="font-bold text-white text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-[#FF2E4D] transition-colors cursor-pointer min-h-[2.5rem] block"
+            className="font-bold text-[#10231A] text-sm sm:text-base tracking-tight leading-snug line-clamp-2 hover:text-[#0B7A3B] transition-colors cursor-pointer min-h-[2.5rem] block"
             title={title}
           >
             {title}
@@ -197,27 +197,27 @@ export default function ProductCard({ product }) {
 
         {/* Pricing */}
         <div className="flex items-center justify-center gap-2.5 flex-wrap">
-          <span className="text-[#FF2E4D] font-extrabold text-base sm:text-lg">
+          <span className="text-[#0B7A3B] font-extrabold text-base sm:text-lg">
             {formatINR(minPrice)}
           </span>
           {hasCompareAt && (
-            <span className="text-slate-400 text-xs sm:text-sm line-through font-medium">
+            <span className="text-[#7B8A82] text-xs sm:text-sm line-through font-medium">
               {formatINR(compareAtAmount)}
             </span>
           )}
         </div>
 
-        {/* Direct Add to Cart Button / Out of Stock button */}
+        {/* Direct Add to Cart Button */}
         <div className="pt-1">
           <button
             onClick={handleAddToCartClick}
             disabled={adding || !isAvailable}
-            className={`w-full py-2.5 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer ${
+            className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-xs flex items-center justify-center gap-2 cursor-pointer ${
               !isAvailable
-                ? 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed opacity-75'
+                ? 'bg-[#F5FAF6] text-[#7B8A82] border border-[#D8E8DD] cursor-not-allowed'
                 : added
-                ? 'bg-emerald-600 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]'
-                : 'bg-[#FF2E4D] hover:bg-red-600 text-white shadow-[0_0_12px_rgba(255,46,77,0.35)] hover:scale-102 active:scale-95'
+                ? 'bg-[#075E2D] text-white shadow-md'
+                : 'bg-[#0B7A3B] hover:bg-[#075E2D] text-white shadow-md shadow-[#0B7A3B]/15 hover:-translate-y-0.5 active:translate-y-0'
             }`}
           >
             {!isAvailable ? (
