@@ -84,6 +84,25 @@ export async function getHomepageHero() {
       }
     }
 
+    // Locate field for Tablet Images (e.g. key 'tablet_image' or 'tablet_images' or containing 'tablet')
+    const tabletField = fields.find((f) => {
+      const k = f.key.toLowerCase();
+      return k === 'tablet_image' || k === 'tablet_images' || k.includes('tablet');
+    });
+
+    const tabletImages = [];
+    if (tabletField) {
+      if (tabletField.references && Array.isArray(tabletField.references.nodes)) {
+        tabletField.references.nodes.forEach((ref) => {
+          const img = extractImageFromReference(ref);
+          if (img) tabletImages.push(img);
+        });
+      } else if (tabletField.reference) {
+        const img = extractImageFromReference(tabletField.reference);
+        if (img) tabletImages.push(img);
+      }
+    }
+
     // Locate field for Mobile Images (e.g. key 'mobile_image' or 'mobile_images' or containing 'mobile')
     const mobileField = fields.find((f) => {
       const k = f.key.toLowerCase();
@@ -106,6 +125,7 @@ export async function getHomepageHero() {
     return {
       logo,
       desktopImages,
+      tabletImages,
       mobileImages,
     };
   } catch (error) {
