@@ -5,7 +5,6 @@ import { useHomepageHero } from '../hooks/useHomepageHero';
 export default function HeroSection() {
   const { hero, loading, error } = useHomepageHero();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   // Touch Swipe State
   const touchStartX = useRef(0);
@@ -45,14 +44,14 @@ export default function HeroSection() {
     setCurrentIndex((prev) => (prev - 1 + slideCount) % slideCount);
   }, [slideCount]);
 
-  // Auto-play timer (4-6 sec interval, pauses on hover)
+  // Auto-play timer (5 sec interval, continuous auto-slide)
   useEffect(() => {
-    if (slideCount <= 1 || isPaused) return;
+    if (slideCount <= 1) return;
     const timer = setInterval(() => {
       nextSlide();
     }, 5000);
     return () => clearInterval(timer);
-  }, [nextSlide, slideCount, isPaused]);
+  }, [nextSlide, slideCount]);
 
   // Touch handlers for mobile swiping
   const handleTouchStart = (e) => {
@@ -74,32 +73,13 @@ export default function HeroSection() {
     }
   };
 
-  // Loading Skeleton View
-  if (loading) {
-    return (
-      <section className="relative w-full bg-[#F5FAF6] overflow-hidden border-b border-[#D8E8DD]">
-        <div className="w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[1920/850] max-h-[700px] bg-[#EAF7EE]/60 animate-pulse flex items-center justify-center">
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 border-4 border-[#D8E8DD] border-t-[#0B7A3B] rounded-full animate-spin" />
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B7A3B]">
-              Loading Hero Carousel...
-            </span>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Hide gracefully if no hero images exist
-  if (error || slides.length === 0 || !slides[0].desktopImg) {
+  if (loading || error || slides.length === 0 || !slides[0].desktopImg) {
     return null;
   }
 
   return (
     <section
       className="relative w-full bg-[#F5FAF6] overflow-hidden border-b border-[#D8E8DD] text-[#10231A] group"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -132,7 +112,7 @@ export default function HeroSection() {
                     alt={desktopImg.altText || `SSD Sports Banner Slide ${idx + 1}`}
                     loading={idx === 0 ? 'eager' : 'lazy'}
                     fetchpriority={idx === 0 ? 'high' : 'auto'}
-                    className="w-full h-auto max-h-[720px] object-cover object-center block"
+                    className="w-full min-h-[520px] sm:min-h-0 h-[580px] sm:h-auto max-h-[640px] sm:max-h-[380px] md:max-h-[440px] lg:max-h-[480px] xl:max-h-[520px] object-cover object-center block"
                   />
                 </picture>
               </div>
