@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { useHomepageHero } from '../hooks/useHomepageHero';
 import { useFooter } from '../hooks/useFooter';
+import defaultLogo from '../assets/logo.png';
 
 export default function Footer() {
   const { hero } = useHomepageHero();
@@ -20,6 +21,8 @@ export default function Footer() {
   const hasEmail = Boolean(footerSettings?.email);
   const hasContact = hasAddress || hasPhone || hasEmail;
 
+  const logoSrc = hero?.logo?.url || defaultLogo;
+
   return (
     <footer className="bg-white border-t border-[#D8E8DD] text-[#52645A] text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -27,24 +30,16 @@ export default function Footer() {
           
           {/* Column 1: Logo & Brand Description */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              {hero?.logo?.url ? (
-                <img
-                  src={hero.logo.url}
-                  alt={hero.logo.altText || 'SSD Sports Logo'}
-                  className="h-10 w-auto max-w-[200px] object-contain"
-                />
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <div className="bg-gradient-to-r from-[#075E2D] to-[#0B7A3B] text-white font-black text-xl tracking-tighter px-2.5 py-0.5 rounded shadow-xs">
-                    SSD
-                  </div>
-                  <span className="font-heading font-black text-xl tracking-wider text-[#10231A] uppercase">
-                    SPORTS
-                  </span>
-                </div>
-              )}
-            </div>
+            <Link to="/" className="flex items-center space-x-2.5 group">
+              <img
+                src={logoSrc}
+                alt={hero?.logo?.altText || 'SSD Sports Logo'}
+                className="h-10 w-auto max-w-[160px] object-contain transition-transform group-hover:scale-105"
+              />
+              <span className="font-heading font-black text-xl tracking-wider text-[#10231A] uppercase group-hover:text-[#0B7A3B] transition-colors">
+                SPORTS
+              </span>
+            </Link>
             <p className="text-[#52645A] text-xs sm:text-sm leading-relaxed max-w-sm font-medium">
               Premium cricket gear built for performance and international match standards.
             </p>

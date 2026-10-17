@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useCollections } from '../hooks/useCollections';
@@ -7,7 +7,20 @@ import ThreeDTiltCard from './ThreeDTiltCard';
 export default function CategoriesSection() {
   const { collections, loading, error } = useCollections({ first: 25 });
 
-  const categoryCollections = (collections || []).filter((col) => col && col.handle);
+  // Exclude "New Arrivals" collection via reliable case-insensitive title and handle checks
+  const categoryCollections = useMemo(() => {
+    return (collections || []).filter((col) => {
+      if (!col || !col.handle) return false;
+      const title = (col.title || '').trim().toLowerCase();
+      const handle = (col.handle || '').trim().toLowerCase();
+      return (
+        title !== 'new arrivals' &&
+        title !== 'new arrival' &&
+        handle !== 'new-arrivals' &&
+        handle !== 'new-arrival'
+      );
+    });
+  }, [collections]);
 
   return (
     <section className="w-full bg-[#F5FAF6] py-16 sm:py-24 border-b border-[#D8E8DD] text-[#10231A] relative z-10">
@@ -46,12 +59,16 @@ export default function CategoriesSection() {
             {categoryCollections.map((col) => {
               const imageUrl = col.image?.url || col.products?.nodes?.[0]?.featuredImage?.url;
               const altText = col.image?.altText || col.products?.nodes?.[0]?.featuredImage?.altText || col.title;
+              const description =
+                col.description && col.description.trim()
+                  ? col.description.trim()
+                  : `Explore SSD ${col.title} series`;
 
               return (
                 <ThreeDTiltCard key={col.id || col.handle} className="h-64 sm:h-80">
                   <Link
-                    to={`/catalog?collection=${encodeURIComponent(col.handle)}`}
-                    className="group relative w-full h-full rounded-2xl overflow-hidden border border-[#D8E8DD] hover:border-[#0B7A3B]/50 transition-all duration-500 bg-white block shadow-sm hover:shadow-xl hover:shadow-[#0B7A3B]/10 flex flex-col justify-between p-6"
+                    to={`/catalog/${encodeURIComponent(col.handle)}`}
+                    className="group relative w-full h-full rounded-2xl overflow-hidden border border-[#D8E8DD] hover:border-[#0B7A3B]/50 transition-all duration-500 bg-white block shadow-sm hover:shadow-xl hover:shadow-[#0B7A3B]/10 flex flex-col justify-end p-6"
                   >
                     {/* Collection Image */}
                     {imageUrl ? (
@@ -61,20 +78,17 @@ export default function CategoriesSection() {
                         className="absolute inset-0 w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-700 ease-out"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#F5FAF6] via-[#EAF7EE] to-white group-hover:scale-105 transition-transform duration-500 ease-out border border-[#D8E8DD]" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#10231A] via-[#075E2D] to-[#0B7A3B] group-hover:scale-105 transition-transform duration-500 ease-out flex items-center justify-center">
+                        <span className="font-heading font-black text-6xl text-white/10 tracking-widest uppercase select-none">
+                          SSD
+                        </span>
+                      </div>
                     )}
 
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#10231A] via-[#10231A]/40 to-transparent group-hover:via-[#10231A]/25 transition-all duration-300" />
 
-                    {/* Category Header */}
-                    <div className="relative z-10 flex justify-between items-start">
-                      <span className="text-[10px] font-mono font-extrabold uppercase tracking-widest text-[#0B7A3B] bg-white/95 backdrop-blur-md px-3 py-1 rounded-full border border-[#0B7A3B]/25 shadow-xs">
-                        COLLECTION
-                      </span>
-                    </div>
-
-                    {/* Category Title & Arrow */}
+                    {/* Category Title & Description (Collection badge removed) */}
                     <div className="relative z-10 space-y-1.5">
                       <div className="flex items-center justify-between text-white group-hover:text-[#20A957] transition-colors">
                         <h3 className="font-heading font-black text-2xl uppercase tracking-wide">
@@ -82,8 +96,8 @@ export default function CategoriesSection() {
                         </h3>
                         <ArrowRight className="w-5 h-5 stroke-[2.5] transform group-hover:translate-x-2 transition-transform duration-300 text-white group-hover:text-[#20A957]" />
                       </div>
-                      <p className="text-xs text-[#EAF7EE] font-medium line-clamp-1">
-                        Explore SSD {col.title} series
+                      <p className="text-xs text-[#EAF7EE] font-medium line-clamp-2 leading-relaxed">
+                        {description}
                       </p>
                     </div>
                   </Link>

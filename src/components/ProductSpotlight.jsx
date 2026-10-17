@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Zap, ArrowRight, Flame, Layers } from 'lucide-react';
+import { Zap, ArrowRight, Flame } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
 import ThreeDTiltCard from './ThreeDTiltCard';
 

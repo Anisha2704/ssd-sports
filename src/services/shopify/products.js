@@ -50,10 +50,13 @@ export async function getPaginatedProducts({ first = 12, after = null, sortOptio
       break;
     case 'featured':
     default:
-      sortKey = 'BEST_SELLING';
+      sortKey = searchQuery?.trim() ? 'RELEVANCE' : 'BEST_SELLING';
       reverse = false;
       break;
   }
+
+  const trimmed = searchQuery?.trim();
+  const queryParam = trimmed ? `(title:*${trimmed}* OR ${trimmed}*)` : null;
 
   const data = await shopifyFetch({
     query: GET_PRODUCTS_PAGINATED_QUERY,
@@ -62,7 +65,7 @@ export async function getPaginatedProducts({ first = 12, after = null, sortOptio
       after,
       sortKey,
       reverse,
-      query: searchQuery ? `title:*${searchQuery}*` : null,
+      query: queryParam,
     },
   });
 
@@ -73,4 +76,37 @@ export async function getPaginatedProducts({ first = 12, after = null, sortOptio
     products,
     pageInfo,
   };
+}
+
+/**
+ * Fast search helper for instant live search dropdown in header
+ * 
+ * @param {Object} options
+ * @param {string} options.query - Search term
+ * @param {number} [options.first=6] - Max results
+ * @returns {Promise<Array>} Matching products
+ */
+export async function searchProducts({ query = '', first = 6 } = {}) {
+  const trimmed = query?.trim();
+  if (!trimmed) return [];
+
+  const queryParam = `(title:*${trimmed}* OR ${trimmed}*)`;
+
+  try {
+    const data = await shopifyFetch({
+      query: GET_PRODUCTS_PAGINATED_QUERY,
+      variables: {
+        first,
+        after: null,
+        sortKey: 'RELEVANCE',
+        reverse: false,
+        query: queryParam,
+      },
+    });
+
+    return data?.products?.nodes || [];
+  } catch (err) {
+    console.error('Error during searchProducts:', err);
+    return [];
+  }
 }

@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { getHomepageHero, isShopifyConfigured } from '../services/shopify';
 
+let cachedHero = null;
+
 /**
  * Custom React hook to fetch Homepage Hero Section metaobject data from Shopify
- * @returns {{ hero: { logo: Object|null, desktopImages: Array, mobileImages: Array }|null, loading: boolean, error: Error|null }}
+ * @returns {{ hero: { logo: Object|null, desktopImages: Array, tabletImages: Array, mobileImages: Array, textSlider: Array|null, isTextSliderList: boolean }|null, loading: boolean, error: Error|null }}
  */
 export function useHomepageHero() {
-  const [hero, setHero] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [hero, setHero] = useState(cachedHero);
+  const [loading, setLoading] = useState(!cachedHero);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -23,8 +25,11 @@ export function useHomepageHero() {
       }
 
       try {
-        setLoading(true);
+        if (!cachedHero) {
+          setLoading(true);
+        }
         const data = await getHomepageHero();
+        cachedHero = data;
         if (isMounted) {
           setHero(data);
           setError(null);
@@ -33,7 +38,9 @@ export function useHomepageHero() {
         if (isMounted) {
           console.error('Failed to fetch Homepage Hero metaobject:', err);
           setError(err);
-          setHero(null);
+          if (!cachedHero) {
+            setHero(null);
+          }
         }
       } finally {
         if (isMounted) {

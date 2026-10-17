@@ -33,7 +33,18 @@ export function useCatalogProducts({ collectionHandle = null, sortOption = 'feat
           sortOption,
         });
         setActiveCollection(result.collection);
-        setProducts(result.products);
+        if (searchQuery && searchQuery.trim()) {
+          const qLower = searchQuery.trim().toLowerCase();
+          const filtered = (result.products || []).filter((p) => {
+            const titleMatch = (p.title || '').toLowerCase().includes(qLower);
+            const descMatch = (p.description || '').toLowerCase().includes(qLower);
+            const tagsMatch = (p.tags || []).some((t) => (typeof t === 'string' ? t.toLowerCase() : '').includes(qLower));
+            return titleMatch || descMatch || tagsMatch;
+          });
+          setProducts(filtered);
+        } else {
+          setProducts(result.products);
+        }
         setPageInfo(result.pageInfo);
       } else {
         setActiveCollection(null);
@@ -72,7 +83,18 @@ export function useCatalogProducts({ collectionHandle = null, sortOption = 'feat
           after: pageInfo.endCursor,
           sortOption,
         });
-        setProducts((prev) => [...prev, ...result.products]);
+        if (searchQuery && searchQuery.trim()) {
+          const qLower = searchQuery.trim().toLowerCase();
+          const filtered = (result.products || []).filter((p) => {
+            const titleMatch = (p.title || '').toLowerCase().includes(qLower);
+            const descMatch = (p.description || '').toLowerCase().includes(qLower);
+            const tagsMatch = (p.tags || []).some((t) => (typeof t === 'string' ? t.toLowerCase() : '').includes(qLower));
+            return titleMatch || descMatch || tagsMatch;
+          });
+          setProducts((prev) => [...prev, ...filtered]);
+        } else {
+          setProducts((prev) => [...prev, ...result.products]);
+        }
         setPageInfo(result.pageInfo);
       } else {
         const result = await getPaginatedProducts({

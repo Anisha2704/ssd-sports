@@ -1,27 +1,23 @@
 import React from 'react';
 import { isShopifyConfigured, getShopifyDomain } from '../services/shopify';
 import { useHomepageHero } from '../hooks/useHomepageHero';
+import defaultLogo from '../assets/logo.png';
 
 export default function Navbar() {
   const configured = isShopifyConfigured();
   const domain = getShopifyDomain();
   const { hero } = useHomepageHero();
+  const logoSrc = hero?.logo?.url || defaultLogo;
 
   return (
     <header className="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          {hero?.logo?.url ? (
-            <img
-              src={hero.logo.url}
-              alt={hero.logo.altText || 'SSD Sports'}
-              className="h-8 max-w-[160px] object-contain"
-            />
-          ) : (
-            <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white font-black text-xl tracking-wider px-3 py-1 rounded shadow-sm">
-              SSD SPORTS
-            </div>
-          )}
+          <img
+            src={logoSrc}
+            alt={hero?.logo?.altText || 'SSD Sports'}
+            className="h-9 max-w-[160px] object-contain"
+          />
           <span className="text-xs uppercase tracking-widest text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
             Headless Storefront Test
           </span>

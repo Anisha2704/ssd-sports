@@ -1,6 +1,8 @@
 import { shopifyFetch } from './client.js';
 import { GET_COLLECTIONS_QUERY, GET_COLLECTION_PRODUCTS_QUERY } from './queries/collections.js';
 
+let inFlightCollectionsPromise = null;
+
 /**
  * Fetch all Shopify collections dynamically
  * 
@@ -9,12 +11,26 @@ import { GET_COLLECTIONS_QUERY, GET_COLLECTION_PRODUCTS_QUERY } from './queries/
  * @returns {Promise<Array>} List of collection nodes
  */
 export async function getCollections({ first = 25 } = {}) {
-  const data = await shopifyFetch({
-    query: GET_COLLECTIONS_QUERY,
-    variables: { first },
-  });
+  if (inFlightCollectionsPromise) {
+    return inFlightCollectionsPromise;
+  }
 
-  return data?.collections?.nodes || [];
+  inFlightCollectionsPromise = (async () => {
+    try {
+      const data = await shopifyFetch({
+        query: GET_COLLECTIONS_QUERY,
+        variables: { first },
+      });
+
+      return data?.collections?.nodes || [];
+    } finally {
+      setTimeout(() => {
+        inFlightCollectionsPromise = null;
+      }, 3000);
+    }
+  })();
+
+  return inFlightCollectionsPromise;
 }
 
 /**
