@@ -1,7 +1,7 @@
 import React from 'react';
+import BrandIntroOpening from '../components/BrandIntroOpening';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
-import MarqueeSection from '../components/MarqueeSection';
 import CategoryGrid from '../components/CategoryGrid';
 import NewArrivals from '../components/NewArrivals';
 import CategoriesSection from '../components/CategoriesSection';
@@ -18,17 +18,17 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans selection:bg-[#0B7A3B] selection:text-white">
+      {/* Cinematic Hinge-Style Opening Sequence */}
+      <BrandIntroOpening />
+
       {/* Navigation Header */}
       <Header />
 
       {/* Main Content Area */}
       <main className="flex-1 space-y-0">
         
-        {/* Cinematic 3D Hero Section */}
+        {/* Homepage Hero Carousel with Integrated Marquee */}
         <HeroSection />
-
-        {/* Continuous Sports Marquee */}
-        <MarqueeSection />
 
         {/* Shop Our Best Sellers Carousel Section */}
         <CategoryGrid
