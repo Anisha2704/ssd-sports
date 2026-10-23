@@ -46,8 +46,158 @@ export function normalizeShopifyMediaUrl(url) {
 }
 
 /**
+/**
+ * Detects whether a URL or extension corresponds to a video format
+ * @param {string} url
+ * @returns {boolean}
+ */
+function isVideoUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  return /\.(mp4|webm|mov|m4v|ogv|ogg|m3u8)($|\?)/i.test(url);
+}
+
+/**
+ * Detects whether a URL or extension corresponds to an image format
+ * @param {string} url
+ * @returns {boolean}
+ */
+function isImageUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  return /\.(jpe?g|png|webp|avif|gif|svg|bmp|heic|tiff)($|\?)/i.test(url);
+}
+
+/**
+ * Extract media object from a Shopify field reference or value
+ * @param {Object} field
+ * @returns {Object|null}
+ */
+function extractMediaFromField(field) {
+  if (!field) return null;
+
+  const ref = field.reference || field.references?.nodes?.[0];
+
+  // 1. Reference present
+  if (ref) {
+    const typeName = ref.__typename;
+    const hasSources = Array.isArray(ref.sources) && ref.sources.length > 0;
+    const isExplicitVideo = typeName === 'Video' || hasSources;
+    const hasImageObj = Boolean(ref.image && ref.image.url);
+    const isExplicitImage = typeName === 'MediaImage' || hasImageObj;
+
+    if (isExplicitVideo) {
+      let posterUrl = null;
+      if (ref.previewImage?.url) {
+        posterUrl = normalizeShopifyMediaUrl(ref.previewImage.url);
+      } else if (ref.image?.url) {
+        posterUrl = normalizeShopifyMediaUrl(ref.image.url);
+      }
+
+      const normalizedSources = (ref.sources || []).map((s) => ({
+        ...s,
+        url: normalizeShopifyMediaUrl(s.url),
+      }));
+
+      const mp4Sources = normalizedSources.filter(
+        (s) => s.mimeType === 'video/mp4' || s.format === 'mp4'
+      );
+      mp4Sources.sort((a, b) => (b.height || 0) - (a.height || 0));
+
+      const otherSources = normalizedSources.filter(
+        (s) => s.mimeType !== 'video/mp4' && s.format !== 'mp4'
+      );
+
+      const sources = [...mp4Sources, ...otherSources];
+      const primaryUrl = mp4Sources[0]?.url || sources[0]?.url || (ref.url ? normalizeShopifyMediaUrl(ref.url) : null);
+
+      if (primaryUrl) {
+        return {
+          type: 'video',
+          primaryUrl,
+          url: primaryUrl,
+          posterUrl,
+          sources,
+          altText: ref.alt || 'SSD Sports Pro Video Highlight',
+          width: null,
+          height: null,
+        };
+      }
+    }
+
+    if (isExplicitImage) {
+      const imageUrl = normalizeShopifyMediaUrl(ref.image.url);
+      return {
+        type: 'image',
+        primaryUrl: imageUrl,
+        url: imageUrl,
+        posterUrl: null,
+        sources: [],
+        altText: ref.image.altText || ref.alt || 'SSD Sports Pro Gear Highlight',
+        width: ref.image.width || null,
+        height: ref.image.height || null,
+      };
+    }
+
+    if (ref.url) {
+      const normalizedUrl = normalizeShopifyMediaUrl(ref.url);
+      if (isVideoUrl(normalizedUrl)) {
+        return {
+          type: 'video',
+          primaryUrl: normalizedUrl,
+          url: normalizedUrl,
+          posterUrl: ref.previewImage?.url ? normalizeShopifyMediaUrl(ref.previewImage.url) : null,
+          sources: [{ url: normalizedUrl, mimeType: 'video/mp4' }],
+          altText: ref.alt || 'SSD Sports Pro Video Highlight',
+          width: null,
+          height: null,
+        };
+      }
+      return {
+        type: 'image',
+        primaryUrl: normalizedUrl,
+        url: normalizedUrl,
+        posterUrl: null,
+        sources: [],
+        altText: ref.alt || 'SSD Sports Pro Gear Highlight',
+        width: null,
+        height: null,
+      };
+    }
+  }
+
+  // 2. Direct string URL in field.value
+  if (field.value && typeof field.value === 'string' && (field.value.startsWith('http') || field.value.startsWith('//'))) {
+    const normalizedUrl = normalizeShopifyMediaUrl(field.value);
+    if (isVideoUrl(normalizedUrl)) {
+      return {
+        type: 'video',
+        primaryUrl: normalizedUrl,
+        url: normalizedUrl,
+        posterUrl: null,
+        sources: [{ url: normalizedUrl, mimeType: 'video/mp4' }],
+        altText: 'SSD Sports Pro Video Highlight',
+        width: null,
+        height: null,
+      };
+    }
+    return {
+      type: 'image',
+      primaryUrl: normalizedUrl,
+      url: normalizedUrl,
+      posterUrl: null,
+      sources: [],
+      altText: 'SSD Sports Pro Gear Highlight',
+      width: null,
+      height: null,
+    };
+  }
+
+  return null;
+}
+
+/**
  * Fetch and parse Homepage Video Section metaobjects
- * @returns {Promise<Array<{id: string, handle: string, primaryUrl: string, posterUrl: string|null, sources: Array, altText: string}>>}
+ * Supports both videos and photos/images
+ * @returns {Promise<Array<{id: string, handle: string, type: string, primaryUrl: string, url: string, posterUrl: string|null, sources: Array, altText: string, width: number|null, height: number|null}>>}
  */
 export async function getHomepageVideos() {
   try {
@@ -62,73 +212,37 @@ export async function getHomepageVideos() {
     metaobjectNodes.forEach((node) => {
       if (!node || !Array.isArray(node.fields)) return;
 
-      const videoField = node.fields.find(
-        (f) => f.key.toLowerCase() === 'video' || f.key.toLowerCase().includes('video')
-      );
+      // Locate media field (video, media, image, photo, or any field with reference)
+      const mediaField =
+        node.fields.find(
+          (f) =>
+            f.key.toLowerCase() === 'video' ||
+            f.key.toLowerCase() === 'media' ||
+            f.key.toLowerCase() === 'image' ||
+            f.key.toLowerCase() === 'photo' ||
+            f.key.toLowerCase().includes('video') ||
+            f.key.toLowerCase().includes('media') ||
+            f.key.toLowerCase().includes('image')
+        ) ||
+        node.fields.find((f) => f.reference || f.references?.nodes?.length > 0) ||
+        node.fields.find((f) => typeof f.value === 'string' && (isVideoUrl(f.value) || isImageUrl(f.value)));
 
-      if (!videoField) return;
+      if (!mediaField) return;
 
-      let primaryUrl = null;
-      let posterUrl = null;
-      let sources = [];
-      let altText = 'SSD Sports Video';
+      const media = extractMediaFromField(mediaField);
 
-      if (videoField.reference) {
-        const ref = videoField.reference;
-
-        // Extract thumbnail/preview poster if available
-        if (ref.previewImage?.url) {
-          posterUrl = normalizeShopifyMediaUrl(ref.previewImage.url);
-        } else if (ref.image?.url) {
-          posterUrl = normalizeShopifyMediaUrl(ref.image.url);
-        }
-
-        if (Array.isArray(ref.sources) && ref.sources.length > 0) {
-          // Normalize all source URLs
-          const normalizedSources = ref.sources.map((s) => ({
-            ...s,
-            url: normalizeShopifyMediaUrl(s.url),
-          }));
-
-          // Prioritize MP4 sources over HLS (.m3u8) for standard HTML5 <video> elements
-          const mp4Sources = normalizedSources.filter(
-            (s) => s.mimeType === 'video/mp4' || s.format === 'mp4'
-          );
-
-          // Sort MP4 sources by resolution/height descending (720p > 480p)
-          mp4Sources.sort((a, b) => (b.height || 0) - (a.height || 0));
-
-          const otherSources = normalizedSources.filter(
-            (s) => s.mimeType !== 'video/mp4' && s.format !== 'mp4'
-          );
-
-          // Put MP4s first so browsers pick and play immediately
-          sources = [...mp4Sources, ...otherSources];
-
-          if (mp4Sources.length > 0) {
-            primaryUrl = mp4Sources[0].url;
-          } else if (sources.length > 0) {
-            primaryUrl = sources[0].url;
-          }
-
-          if (ref.alt) {
-            altText = ref.alt;
-          }
-        } else if (ref.url) {
-          primaryUrl = normalizeShopifyMediaUrl(ref.url);
-        }
-      } else if (videoField.value && typeof videoField.value === 'string' && videoField.value.startsWith('http')) {
-        primaryUrl = normalizeShopifyMediaUrl(videoField.value);
-      }
-
-      if (primaryUrl) {
+      if (media && media.primaryUrl) {
         videos.push({
           id: node.id || node.handle,
           handle: node.handle,
-          primaryUrl,
-          posterUrl,
-          sources,
-          altText,
+          type: media.type,
+          primaryUrl: media.primaryUrl,
+          url: media.url,
+          posterUrl: media.posterUrl,
+          sources: media.sources,
+          altText: media.altText,
+          width: media.width,
+          height: media.height,
         });
       }
     });
@@ -139,3 +253,4 @@ export async function getHomepageVideos() {
     throw error;
   }
 }
+

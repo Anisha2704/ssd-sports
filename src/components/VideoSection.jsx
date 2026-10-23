@@ -1,23 +1,48 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Sparkles } from 'lucide-react';
 import { useHomepageVideos } from '../hooks/useHomepageVideos';
 
 /**
- * Single Video Card Component with Play/Pause and Mute/Unmute toggles
+ * Single Media Card Component - Renders either a Video or Photo/Image
  */
-function VideoCard({ video }) {
+function VideoCard({ video: media }) {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Reliable browser autoplay enforcement
+  const mediaUrl = media?.url || media?.primaryUrl;
+  const altText = media?.altText || 'SSD Sports Highlight';
+
+  const isVideo = Boolean(
+    media &&
+    (media.type === 'video' ||
+      (media.sources && media.sources.length > 0) ||
+      (media.primaryUrl && /\.(mp4|webm|mov|m4v|ogv|ogg|m3u8)($|\?)/i.test(media.primaryUrl)))
+  );
+
+  const isImage = Boolean(
+    media &&
+    !isVideo &&
+    (media.type === 'image' ||
+      media.url ||
+      media.primaryUrl)
+  );
+
+  // Reset state on media change
   useEffect(() => {
+    setIsLoaded(false);
+    setHasError(false);
+  }, [mediaUrl]);
+
+  // Reliable browser autoplay enforcement for video
+  useEffect(() => {
+    if (!isVideo) return;
+
     const vid = videoRef.current;
     if (!vid) return;
 
-    // Setting both DOM property and attribute is required to satisfy strict browser autoplay policies
     vid.muted = true;
     vid.defaultMuted = true;
 
@@ -28,13 +53,13 @@ function VideoCard({ video }) {
           setIsPlaying(true);
         })
         .catch(() => {
-          // Browser requires user gesture or tab is inactive
           setIsPlaying(false);
         });
     }
-  }, [video.primaryUrl]);
+  }, [isVideo, mediaUrl]);
 
   const togglePlay = () => {
+    if (!isVideo) return;
     const vid = videoRef.current;
     if (!vid) return;
 
@@ -61,73 +86,124 @@ function VideoCard({ video }) {
 
   return (
     <div
-      onClick={togglePlay}
-      className="relative shrink-0 w-[78vw] sm:w-[260px] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] aspect-[9/16] rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-[#0B7A3B]/15 transition-all duration-300 bg-[#07160E] cursor-pointer snap-start group border border-[#D8E8DD] hover:border-[#0B7A3B]/40 select-none"
+      onClick={isVideo ? togglePlay : undefined}
+      className={`relative shrink-0 w-[78vw] sm:w-[260px] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] aspect-[9/16] rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-[#0B7A3B]/15 transition-all duration-300 bg-[#07160E] snap-start group border border-[#D8E8DD] hover:border-[#0B7A3B]/40 select-none ${
+        isVideo ? 'cursor-pointer' : ''
+      }`}
     >
-      {/* Video Player */}
-      <video
-        ref={videoRef}
-        src={video.primaryUrl}
-        poster={video.posterUrl || undefined}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        onLoadedData={() => setIsLoaded(true)}
-        onError={() => setHasError(true)}
-        className="w-full h-full object-cover"
-      >
-        {video.sources && video.sources.length > 0 ? (
-          video.sources.map((s, idx) => (
-            <source key={idx} src={s.url} type={s.mimeType || 'video/mp4'} />
-          ))
-        ) : (
-          <source src={video.primaryUrl} type="video/mp4" />
-        )}
-      </video>
-
-      {/* Fallback to poster image if media fails to load */}
-      {hasError && video.posterUrl && (
-        <img
-          src={video.posterUrl}
-          alt={video.altText || 'Video preview'}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      {/* Loading Shimmer Placeholder */}
+      {!isLoaded && !hasError && (
+        <div className="absolute inset-0 bg-[#0B2014] animate-pulse flex items-center justify-center">
+          <span className="text-[10px] uppercase font-mono tracking-widest text-[#0B7A3B]">
+            Loading...
+          </span>
+        </div>
       )}
 
-      {/* Gradient Bottom Shadow */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#10231A]/85 via-transparent to-transparent pointer-events-none opacity-60 group-hover:opacity-85 transition-opacity" />
+      {/* Case 1: Video Player */}
+      {isVideo && mediaUrl ? (
+        <>
+          <video
+            ref={videoRef}
+            src={mediaUrl}
+            poster={media.posterUrl || undefined}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setIsLoaded(true)}
+            onError={() => setHasError(true)}
+            className={`w-full h-full object-cover transition-opacity duration-500 ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {media.sources && media.sources.length > 0 ? (
+              media.sources.map((s, idx) => (
+                <source key={idx} src={s.url} type={s.mimeType || 'video/mp4'} />
+              ))
+            ) : (
+              <source src={mediaUrl} type="video/mp4" />
+            )}
+          </video>
 
-      {/* Paused Indicator Overlay */}
-      {!isPlaying && (
-        <div className="absolute inset-0 bg-black/35 flex items-center justify-center backdrop-blur-[2px] transition-all z-10 pointer-events-none">
-          <div className="w-14 h-14 rounded-full bg-[#0B7A3B] text-white flex items-center justify-center shadow-lg transform scale-100 transition-transform">
-            <Play className="w-6 h-6 fill-current ml-1" />
+          {/* Fallback to poster or image if video media fails */}
+          {hasError && (media.posterUrl || media.url) && (
+            <img
+              src={media.posterUrl || media.url}
+              alt={altText}
+              onLoad={() => setIsLoaded(true)}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          )}
+
+          {/* Gradient Bottom Shadow */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#10231A]/85 via-transparent to-transparent pointer-events-none opacity-60 group-hover:opacity-85 transition-opacity" />
+
+          {/* Paused Indicator Overlay */}
+          {!isPlaying && (
+            <div className="absolute inset-0 bg-black/35 flex items-center justify-center backdrop-blur-[2px] transition-all z-10 pointer-events-none">
+              <div className="w-14 h-14 rounded-full bg-[#0B7A3B] text-white flex items-center justify-center shadow-lg transform scale-100 transition-transform">
+                <Play className="w-6 h-6 fill-current ml-1" />
+              </div>
+            </div>
+          )}
+
+          {/* Top Controls: Sound Toggle and Play/Pause indicator */}
+          <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
+            {/* Sound toggle button */}
+            <button
+              type="button"
+              onClick={toggleMute}
+              aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+              className="pointer-events-auto w-8 h-8 rounded-full bg-black/50 hover:bg-[#0B7A3B] text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition-all duration-200 cursor-pointer shadow-xs active:scale-90"
+            >
+              {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+            </button>
+
+            {/* Micro Play/Pause Badge */}
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 text-[#10231A] p-2 rounded-full backdrop-blur-md border border-[#D8E8DD] shadow-xs">
+              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
+            </div>
           </div>
+        </>
+      ) : isImage && mediaUrl ? (
+        /* Case 2: Photo / Image Card */
+        <>
+          <img
+            src={mediaUrl}
+            alt={altText}
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+            onError={() => setHasError(true)}
+            className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+
+          {/* Gradient Bottom Shadow */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#10231A]/85 via-transparent to-transparent pointer-events-none opacity-60 group-hover:opacity-85 transition-opacity" />
+
+          {/* Top Corner Pill Badge */}
+          <div className="absolute top-3 left-3 z-20 pointer-events-none">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[9px] font-mono uppercase tracking-widest font-bold shadow-xs">
+              <Sparkles className="w-3 h-3 text-[#20A957]" />
+              <span>PRO SNAP</span>
+            </span>
+          </div>
+        </>
+      ) : (
+        /* Case 3: Fallback Media Placeholder */
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#F5FAF6] via-[#EAF7EE] to-white text-[#10231A] p-4 text-center">
+          <span className="text-xs font-black tracking-widest uppercase text-[#0B7A3B] font-heading">
+            SSD SPORTS
+          </span>
         </div>
       )}
-
-      {/* Top Controls: Sound Toggle and Play/Pause indicator */}
-      <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
-        {/* Sound toggle button */}
-        <button
-          type="button"
-          onClick={toggleMute}
-          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-          className="pointer-events-auto w-8 h-8 rounded-full bg-black/50 hover:bg-[#0B7A3B] text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition-all duration-200 cursor-pointer shadow-xs active:scale-90"
-        >
-          {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-        </button>
-
-        {/* Micro Play/Pause Badge */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 text-[#10231A] p-2 rounded-full backdrop-blur-md border border-[#D8E8DD] shadow-xs">
-          {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
-        </div>
-      </div>
     </div>
   );
 }
+
 
 /**
  * VideoSection - Horizontal scrollable video carousel component

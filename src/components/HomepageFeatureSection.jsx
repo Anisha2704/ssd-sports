@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { ArrowRight, Play, Pause, Volume2, VolumeX, Sparkles } from 'lucide-react';
 import { useHomepageFeature } from '../hooks/useHomepageFeature';
 
 /**
- * HomepageFeatureSection - Premium split-layout craftsmanship/performance section with video
+ * HomepageFeatureSection - Premium split-layout craftsmanship/performance section
+ * Dynamically handles both video and photo/image assets from Shopify Admin
  */
 export default function HomepageFeatureSection() {
   const { feature, loading, error } = useHomepageFeature();
@@ -12,12 +13,39 @@ export default function HomepageFeatureSection() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const video = feature?.video;
+  // Extract media object (supports both video and photo/image)
+  const media = feature?.media || (feature?.video ? { type: 'video', ...feature.video } : feature?.image ? { type: 'image', ...feature.image } : null);
 
-  // Reliable browser autoplay enforcement
+  const isVideo = Boolean(
+    media &&
+    (media.type === 'video' ||
+      (media.sources && media.sources.length > 0) ||
+      (media.primaryUrl && /\.(mp4|webm|mov|m4v|ogv|ogg|m3u8)($|\?)/i.test(media.primaryUrl)))
+  );
+
+  const isImage = Boolean(
+    media &&
+    !isVideo &&
+    (media.type === 'image' ||
+      media.url ||
+      media.primaryUrl)
+  );
+
+  const mediaUrl = media?.url || media?.primaryUrl;
+  const altText = media?.altText || 'SSD Sports Craftsmanship & Performance';
+
+  // Reset loaded/error states when media changes
   useEffect(() => {
+    setIsLoaded(false);
+    setHasError(false);
+  }, [mediaUrl]);
+
+  // Reliable browser autoplay enforcement for video
+  useEffect(() => {
+    if (!isVideo) return;
+
     const vid = videoRef.current;
     if (!vid) return;
 
@@ -34,9 +62,10 @@ export default function HomepageFeatureSection() {
           setIsPlaying(false);
         });
     }
-  }, [video?.primaryUrl]);
+  }, [isVideo, mediaUrl]);
 
   const togglePlay = () => {
+    if (!isVideo) return;
     const vid = videoRef.current;
     if (!vid) return;
 
@@ -87,17 +116,29 @@ export default function HomepageFeatureSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
-          {/* Column 1: Large Premium Video Presentation */}
+          {/* Column 1: Large Premium Media Presentation (Video or Photo) */}
           <div
-            onClick={togglePlay}
-            className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-lg bg-[#07160E] border border-[#D8E8DD] hover:border-[#0B7A3B]/40 group select-none cursor-pointer"
+            onClick={isVideo ? togglePlay : undefined}
+            className={`relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-lg bg-[#07160E] border border-[#D8E8DD] hover:border-[#0B7A3B]/40 group select-none ${
+              isVideo ? 'cursor-pointer' : ''
+            }`}
           >
-            {video?.primaryUrl ? (
+            {/* Shimmer Placeholder while media loads */}
+            {!isLoaded && !hasError && (
+              <div className="absolute inset-0 bg-[#0B2014] animate-pulse flex items-center justify-center">
+                <span className="text-xs uppercase font-mono tracking-widest text-[#0B7A3B]">
+                  Loading Media...
+                </span>
+              </div>
+            )}
+
+            {/* Case 1: Video Media */}
+            {isVideo && mediaUrl ? (
               <>
                 <video
                   ref={videoRef}
-                  src={video.primaryUrl}
-                  poster={video.posterUrl || undefined}
+                  src={mediaUrl}
+                  poster={media.posterUrl || undefined}
                   autoPlay
                   muted
                   loop
@@ -105,22 +146,25 @@ export default function HomepageFeatureSection() {
                   preload="metadata"
                   onLoadedData={() => setIsLoaded(true)}
                   onError={() => setHasError(true)}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-500 ${
+                    isLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
                 >
-                  {video.sources && video.sources.length > 0 ? (
-                    video.sources.map((s, idx) => (
+                  {media.sources && media.sources.length > 0 ? (
+                    media.sources.map((s, idx) => (
                       <source key={idx} src={s.url} type={s.mimeType || 'video/mp4'} />
                     ))
                   ) : (
-                    <source src={video.primaryUrl} type="video/mp4" />
+                    <source src={mediaUrl} type="video/mp4" />
                   )}
                 </video>
 
-                {/* Fallback to poster image if media fails to load */}
-                {hasError && video.posterUrl && (
+                {/* Fallback to poster or image if video media fails */}
+                {hasError && (media.posterUrl || media.url) && (
                   <img
-                    src={video.posterUrl}
-                    alt={video.altText || 'Feature video preview'}
+                    src={media.posterUrl || media.url}
+                    alt={altText}
+                    onLoad={() => setIsLoaded(true)}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 )}
@@ -155,7 +199,33 @@ export default function HomepageFeatureSection() {
                   </div>
                 </div>
               </>
+            ) : isImage && mediaUrl ? (
+              /* Case 2: Photo / Image Media */
+              <>
+                <img
+                  src={mediaUrl}
+                  alt={altText}
+                  loading="lazy"
+                  onLoad={() => setIsLoaded(true)}
+                  onError={() => setHasError(true)}
+                  className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out ${
+                    isLoaded ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+
+                {/* Subtle Vignette & Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#10231A]/60 via-transparent to-transparent pointer-events-none" />
+
+                {/* Top Corner Premium Badge */}
+                <div className="absolute top-4 left-4 z-20 pointer-events-none">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[10px] font-mono uppercase tracking-widest font-bold shadow-xs">
+                    <Sparkles className="w-3 h-3 text-[#20A957]" />
+                    <span>CRAFTSMANSHIP</span>
+                  </span>
+                </div>
+              </>
             ) : (
+              /* Case 3: Fallback Brand Presentation */
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#F5FAF6] via-[#EAF7EE] to-white text-[#10231A] p-8 text-center">
                 <span className="text-2xl font-black tracking-widest uppercase text-[#0B7A3B] font-heading">
                   SSD SPORTS PERFORMANCE
@@ -195,3 +265,4 @@ export default function HomepageFeatureSection() {
     </section>
   );
 }
+

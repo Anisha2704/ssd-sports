@@ -14,6 +14,7 @@ export const GET_HOMEPAGE_FEATURE_QUERY = `
           value
           type
           reference {
+            __typename
             ... on Video {
               id
               alt
@@ -36,6 +37,41 @@ export const GET_HOMEPAGE_FEATURE_QUERY = `
               id
               image {
                 url
+                altText
+                width
+                height
+              }
+            }
+          }
+          references(first: 5) {
+            nodes {
+              __typename
+              ... on Video {
+                id
+                alt
+                previewImage {
+                  url
+                }
+                sources {
+                  url
+                  mimeType
+                  format
+                  height
+                  width
+                }
+              }
+              ... on GenericFile {
+                id
+                url
+              }
+              ... on MediaImage {
+                id
+                image {
+                  url
+                  altText
+                  width
+                  height
+                }
               }
             }
           }
