@@ -254,27 +254,27 @@
 
 .animate-ssd-ring {
   stroke-dasharray: 2300;
-  animation: ssdRingDraw 0.68s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: ssdRingDraw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 .animate-ssd-letters {
-  animation: ssdLetterReveal 0.68s cubic-bezier(0.45, 0, 0.25, 1) forwards;
+  animation: ssdLetterReveal 1.4s cubic-bezier(0.45, 0, 0.25, 1) forwards;
 }
 
 .animate-ssd-beam {
-  animation: ssdLeadingBeam 0.68s cubic-bezier(0.45, 0, 0.25, 1) forwards;
+  animation: ssdLeadingBeam 1.4s cubic-bezier(0.45, 0, 0.25, 1) forwards;
 }
 
 .animate-ssd-sheen {
-  animation: ssdSheenSweep 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards;
+  animation: ssdSheenSweep 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
 }
 
 .animate-ssd-glint {
-  animation: ssdGlintSpark 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.06s forwards;
+  animation: ssdGlintSpark 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
 }
 
 .animate-ssd-tracking {
-  animation: ssdTrackingExpand 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.15s forwards;
+  animation: ssdTrackingExpand 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.25s forwards;
 }
 
 /* Reduced Motion Override */

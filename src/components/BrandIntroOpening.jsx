@@ -25,26 +25,26 @@ export default function BrandIntroOpening() {
       // In case sessionStorage is restricted
     }
 
-    // Step 1: Start progressive stroke and wordmark reveal (60ms)
+    // Step 1: Start progressive stroke and wordmark reveal (80ms)
     const timerDraw = setTimeout(() => {
       setPhase('drawing');
-    }, 60);
+    }, 80);
 
-    // Step 2: Complete wordmark settles into place with metallic glint & sheen sweep (750ms)
+    // Step 2: Complete wordmark settles into place with metallic glint & sheen sweep (1500ms)
     const timerSettle = setTimeout(() => {
       setPhase('settled');
-    }, 750);
+    }, 1500);
 
-    // Step 3: Cinematic curtain lift transition (1350ms)
+    // Step 3: Cinematic curtain lift transition (3200ms)
     const timerLift = setTimeout(() => {
       setPhase('lifting');
-    }, 1350);
+    }, 3200);
 
-    // Step 4: Animation complete, fully unmount from DOM (2100ms)
+    // Step 4: Animation complete, fully unmount from DOM (4200ms)
     const timerDone = setTimeout(() => {
       setPhase('complete');
       setIsFinished(true);
-    }, 2100);
+    }, 4200);
 
     return () => {
       clearTimeout(timerDraw);
@@ -73,7 +73,7 @@ export default function BrandIntroOpening() {
     setTimeout(() => {
       setPhase('complete');
       setIsFinished(true);
-    }, 380);
+    }, 450);
   }, []);
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export default function BrandIntroOpening() {
       aria-modal="true"
       aria-label="SSD SPORTS Brand Introduction"
       onClick={handleSkip}
-      className={`fixed inset-0 z-[99999] bg-[#0c120e] flex flex-col items-center justify-center select-none cursor-pointer overflow-hidden transition-transform duration-[750ms] ${
+      className={`fixed inset-0 z-[99999] bg-[#0c120e] flex flex-col items-center justify-center select-none cursor-pointer overflow-hidden transition-transform duration-[1000ms] ${
         isLifting ? '-translate-y-full ease-[cubic-bezier(0.76,0,0.24,1)]' : 'translate-y-0'
       }`}
       style={{
