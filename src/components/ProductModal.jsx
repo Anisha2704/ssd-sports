@@ -84,8 +84,8 @@ export default function ProductModal({ product, onClose }) {
         {/* Details Column */}
         <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
-            <div className="space-y-1">
-              <span className="text-[11px] font-mono text-[#7B8A82] uppercase tracking-widest">
+            <div className="space-y-1 text-center md:text-left">
+              <span className="text-[11px] font-mono text-[#7B8A82] uppercase tracking-widest block">
                 Shopify Handle: <code className="text-[#0B7A3B] font-bold">{handle}</code>
               </span>
               <h2 className="text-2xl font-black text-[#10231A] uppercase tracking-tight leading-snug">

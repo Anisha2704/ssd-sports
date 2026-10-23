@@ -399,7 +399,7 @@ export default function ProductDetailsPage() {
             
             {/* Title & Availability */}
             <div className="space-y-2">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center sm:justify-start gap-3">
                 <span
                   className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
                     isAvailable
@@ -422,14 +422,14 @@ export default function ProductDetailsPage() {
                 )}
               </div>
 
-              <div className="flex items-start justify-between gap-4">
-                <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-[#10231A] tracking-wider uppercase leading-snug">
+              <div className="flex items-center justify-between gap-4">
+                <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-[#10231A] tracking-wider uppercase leading-snug text-center sm:text-left flex-1">
                   {product.title}
                 </h1>
                 <button
                   onClick={() => toggleWishlist(product)}
                   aria-label={isFav ? "Remove from wishlist" : "Add to wishlist"}
-                  className="w-10 h-10 rounded-full bg-[#F5FAF6] hover:bg-[#EAF7EE] border border-[#D8E8DD] flex items-center justify-center text-[#7B8A82] hover:text-[#0B7A3B] hover:border-[#0B7A3B] hover:scale-110 active:scale-95 transition-all shrink-0 mt-1 cursor-pointer shadow-xs"
+                  className="w-10 h-10 rounded-full bg-[#F5FAF6] hover:bg-[#EAF7EE] border border-[#D8E8DD] flex items-center justify-center text-[#7B8A82] hover:text-[#0B7A3B] hover:border-[#0B7A3B] hover:scale-110 active:scale-95 transition-all shrink-0 cursor-pointer shadow-xs"
                 >
                   <Heart
                     className={`w-5 h-5 transition-colors ${
@@ -587,7 +587,7 @@ export default function ProductDetailsPage() {
         {/* 3. Product Specifications Table */}
         {specifications.length > 0 && (
           <div className="border-t border-[#D8E8DD] pt-10 space-y-6">
-            <h2 className="font-heading text-xl sm:text-2xl font-black text-[#10231A] uppercase tracking-wider">
+            <h2 className="font-heading text-xl sm:text-2xl font-black text-[#10231A] uppercase tracking-wider text-center sm:text-left">
               Product Specifications
             </h2>
 
@@ -610,7 +610,7 @@ export default function ProductDetailsPage() {
         {/* 4. Related Products Section ("YOU MAY ALSO LIKE") */}
         {relatedProducts.length > 0 && (
           <div className="border-t border-[#D8E8DD] pt-12 space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-2 text-center sm:text-left">
               <h2 className="font-heading text-xl sm:text-2xl font-black text-[#10231A] uppercase tracking-wider">
                 You May Also Like
               </h2>

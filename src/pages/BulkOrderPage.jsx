@@ -89,14 +89,14 @@ export default function BulkOrderPage() {
       <Header />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
-        <div className="border-b border-[#D8E8DD] pb-6">
+        <div className="border-b border-[#D8E8DD] pb-6 text-center sm:text-left">
           <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#0B7A3B]">
             CORPORATE &amp; CLUB INQUIRIES
           </span>
           <h1 className="font-heading text-3xl sm:text-5xl font-black text-[#10231A] uppercase tracking-wider mt-1">
             Bulk &amp; Team Orders
           </h1>
-          <p className="text-[#52645A] text-xs sm:text-sm mt-1 font-medium">
+          <p className="text-[#52645A] text-xs sm:text-sm mt-1 font-medium max-w-xl mx-auto sm:mx-0">
             Inquire about custom team orders, club supplies, academies, and bulk equipment purchases.
           </p>
         </div>

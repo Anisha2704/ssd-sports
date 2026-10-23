@@ -31,6 +31,13 @@
     letter-spacing: 0.025em;
   }
 
+  /* Center all headings on mobile screens (< 768px), keeping desktop layout untouched */
+  @media (max-width: 767px) {
+    h1, h2, h3, h4, h5, h6 {
+      text-align: center;
+    }
+  }
+
   ::selection {
     background-color: #0B7A3B;
     color: #ffffff;

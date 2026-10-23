@@ -16,6 +16,10 @@ export const GET_HOMEPAGE_FEATURE_QUERY = `
           reference {
             ... on Video {
               id
+              alt
+              previewImage {
+                url
+              }
               sources {
                 url
                 mimeType
@@ -27,6 +31,12 @@ export const GET_HOMEPAGE_FEATURE_QUERY = `
             ... on GenericFile {
               id
               url
+            }
+            ... on MediaImage {
+              id
+              image {
+                url
+              }
             }
           }
         }

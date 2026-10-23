@@ -16,8 +16,8 @@ export default function WishlistPage() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
         
         {/* Heading & Wishlist Count */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#D8E8DD] pb-6">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#D8E8DD] pb-6 text-center sm:text-left">
+          <div className="w-full sm:w-auto">
             <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#0B7A3B] bg-[#EAF7EE] border border-[#0B7A3B]/20 px-3 py-1 rounded-full">
               SAVED ITEMS
             </span>
@@ -30,7 +30,7 @@ export default function WishlistPage() {
           </div>
 
           {wishlistCount > 0 && (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center sm:justify-end gap-3">
               <span className="text-xs font-mono font-bold text-[#52645A] bg-[#F5FAF6] border border-[#D8E8DD] px-3.5 py-1.5 rounded-full">
                 {wishlistCount} {wishlistCount === 1 ? 'Saved Item' : 'Saved Items'}
               </span>

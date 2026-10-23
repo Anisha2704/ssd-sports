@@ -118,21 +118,21 @@ export default function CatalogPage() {
           </nav>
 
           {/* Page Heading & Description */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 text-center md:text-left">
+            <div className="w-full md:w-auto">
               <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#0B7A3B]">
                 {searchQuery ? 'SEARCH RESULTS' : 'PRO EQUIPMENT CATALOG'}
               </span>
               <h1 className="font-heading text-3xl sm:text-5xl font-black text-[#10231A] uppercase tracking-wider">
                 {pageTitle}
               </h1>
-              <p className="text-[#52645A] text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed font-medium">
+              <p className="text-[#52645A] text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed font-medium mx-auto md:mx-0">
                 {pageDescription}
               </p>
 
               {/* Active search pill */}
               {searchQuery && (
-                <div className="flex items-center gap-2 mt-3">
+                <div className="flex items-center justify-center md:justify-start gap-2 mt-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#EAF7EE] text-[#0B7A3B] border border-[#0B7A3B]/30 shadow-xs">
                     <span>Query: &ldquo;{searchQuery}&rdquo;</span>
                     <button

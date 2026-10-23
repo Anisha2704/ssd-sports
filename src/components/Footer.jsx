@@ -26,10 +26,10 @@ export default function Footer() {
   return (
     <footer className="bg-white border-t border-[#D8E8DD] text-[#52645A] text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center sm:text-left">
           
           {/* Column 1: Logo & Brand Description */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center sm:items-start text-center sm:text-left">
             <Link to="/" className="flex items-center space-x-2.5 group">
               <img
                 src={logoSrc}
@@ -82,15 +82,15 @@ export default function Footer() {
               </h3>
               <ul className="space-y-3 text-xs sm:text-sm font-medium">
                 {hasAddress && (
-                  <li className="flex items-start space-x-3 text-[#52645A]">
+                  <li className="flex items-start justify-center sm:justify-start space-x-3 text-[#52645A]">
                     <MapPin className="w-4 h-4 text-[#0B7A3B] shrink-0 mt-0.5" />
-                    <span className="whitespace-pre-line leading-relaxed break-words">
+                    <span className="whitespace-pre-line leading-relaxed break-words text-left">
                       {footerSettings.address}
                     </span>
                   </li>
                 )}
                 {hasPhone && (
-                  <li className="flex items-center space-x-3 text-[#52645A]">
+                  <li className="flex items-center justify-center sm:justify-start space-x-3 text-[#52645A]">
                     <Phone className="w-4 h-4 text-[#0B7A3B] shrink-0" />
                     <a
                       href={`tel:${footerSettings.phone.replace(/\s+/g, '')}`}
@@ -101,7 +101,7 @@ export default function Footer() {
                   </li>
                 )}
                 {hasEmail && (
-                  <li className="flex items-center space-x-3 text-[#52645A]">
+                  <li className="flex items-center justify-center sm:justify-start space-x-3 text-[#52645A]">
                     <Mail className="w-4 h-4 text-[#0B7A3B] shrink-0" />
                     <a
                       href={`mailto:${footerSettings.email}`}
@@ -121,7 +121,7 @@ export default function Footer() {
               <h3 className="font-heading font-black text-[#10231A] uppercase tracking-wider text-xs">
                 Follow Us
               </h3>
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center justify-center sm:justify-start space-x-3">
                 {hasInstagram && (
                   <a
                     href={footerSettings.instagramUrl}

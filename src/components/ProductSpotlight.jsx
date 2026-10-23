@@ -49,7 +49,7 @@ export default function ProductSpotlight() {
           </div>
 
           {/* Right: Storytelling Content */}
-          <div className="lg:col-span-6 space-y-6 text-left">
+          <div className="lg:col-span-6 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
             <div className="inline-flex items-center space-x-2 bg-[#EAF7EE] border border-[#0B7A3B]/30 px-3.5 py-1.5 rounded-full">
               <Zap className="w-4 h-4 text-[#0B7A3B]" />
               <span className="text-xs font-mono font-extrabold uppercase tracking-[0.2em] text-[#0B7A3B]">
@@ -57,7 +57,7 @@ export default function ProductSpotlight() {
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-black uppercase text-[#10231A] tracking-tight leading-tight">
+            <h2 className="font-heading text-4xl sm:text-6xl font-black uppercase text-[#10231A] tracking-tight leading-tight w-full">
               PLAYER EDITION <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#075E2D] via-[#0B7A3B] to-[#20A957]">
                 MASTER SERIES
@@ -69,7 +69,7 @@ export default function ProductSpotlight() {
             </p>
 
             {/* Specification Chips */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 w-full">
               <div className="bg-white border border-[#D8E8DD] p-3.5 rounded-xl text-center shadow-xs">
                 <span className="block text-[10px] font-mono text-[#7B8A82] uppercase tracking-widest">WILLOW</span>
                 <span className="font-bold text-sm text-[#10231A]">Grade 1 English</span>
@@ -85,7 +85,7 @@ export default function ProductSpotlight() {
             </div>
 
             {/* CTA */}
-            <div className="pt-4 flex items-center space-x-4">
+            <div className="pt-4 flex items-center justify-center lg:justify-start space-x-4 w-full">
               <Link
                 to={spotlightProduct?.handle ? `/products/${spotlightProduct.handle}` : '/catalog'}
                 className="group inline-flex items-center space-x-3 px-8 py-4 bg-[#0B7A3B] hover:bg-[#075E2D] text-white font-extrabold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md shadow-[#0B7A3B]/20 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
