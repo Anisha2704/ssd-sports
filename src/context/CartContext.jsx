@@ -6,6 +6,7 @@ import {
   getCart,
   updateCartLine,
   removeCartLine,
+  updateCartNote,
   isShopifyConfigured,
 } from '../services/shopify';
 
@@ -23,6 +24,7 @@ const CartContext = createContext({
   buyNow: async () => {},
   updateQuantity: async () => {},
   removeItem: async () => {},
+  updateNote: async () => {},
 });
 
 export function CartProvider({ children }) {
@@ -178,6 +180,22 @@ export function CartProvider({ children }) {
     }
   };
 
+  /**
+   * Update order note in cart
+   */
+  const updateNote = async (newNote) => {
+    if (!cart?.id) return null;
+    try {
+      const updated = await updateCartNote(cart.id, newNote);
+      setCart(updated);
+      return updated;
+    } catch (err) {
+      console.error('Failed to update cart note:', err);
+      setError(err.message || 'Could not update order note.');
+      throw err;
+    }
+  };
+
   const cartCount = cart?.totalQuantity || 0;
 
   return (
@@ -194,6 +212,7 @@ export function CartProvider({ children }) {
         buyNow,
         updateQuantity,
         removeItem,
+        updateNote,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { ShoppingBag, Trash2, ArrowRight, Minus, Plus, RefreshCw } from 'lucide-react';
+import { ShoppingBag, Trash2, ArrowRight, Minus, Plus, RefreshCw, FileText, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { formatCheckoutUrl } from '../services/shopify';
@@ -23,10 +23,98 @@ function formatINR(amount) {
 }
 
 export default function CartPage() {
-  const { cart, loading, updateQuantity, removeItem } = useCart();
+  const { cart, loading, updateQuantity, removeItem, updateNote } = useCart();
   const lineItems = cart?.lines?.nodes || [];
   const subtotal = cart?.cost?.subtotalAmount?.amount || 0;
   const checkoutUrl = cart?.checkoutUrl ? formatCheckoutUrl(cart?.checkoutUrl) : null;
+
+  // Order Note local state
+  const [noteText, setNoteText] = useState(cart?.note || '');
+  const [isSavingNote, setIsSavingNote] = useState(false);
+  const [noteSavedRecently, setNoteSavedRecently] = useState(false);
+  const [noteError, setNoteError] = useState(null);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const saveTimeoutRef = useRef(null);
+
+  // Sync with Shopify cart note whenever cart loads/updates
+  useEffect(() => {
+    if (cart?.note !== undefined && cart?.note !== null) {
+      setNoteText(cart.note);
+    }
+  }, [cart?.note]);
+
+  // Cleanup pending timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const saveNoteToShopify = async (textToSave) => {
+    if (!cart?.id) return;
+    const trimmed = textToSave.slice(0, 500);
+    // Don't call API if note hasn't changed from saved cart state
+    if (trimmed === (cart.note || '')) return;
+
+    setIsSavingNote(true);
+    setNoteError(null);
+    try {
+      await updateNote(trimmed);
+      setNoteSavedRecently(true);
+      setTimeout(() => {
+        setNoteSavedRecently(false);
+      }, 2500);
+    } catch (err) {
+      console.error('Failed to save order note:', err);
+      setNoteError('Could not save note to Shopify cart. Please try again.');
+    } finally {
+      setIsSavingNote(false);
+    }
+  };
+
+  const handleNoteChange = (e) => {
+    const val = e.target.value.slice(0, 500);
+    setNoteText(val);
+    setNoteError(null);
+
+    // Debounced auto-save (800ms)
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    saveTimeoutRef.current = setTimeout(() => {
+      saveNoteToShopify(val);
+    }, 800);
+  };
+
+  const handleNoteBlur = () => {
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    saveNoteToShopify(noteText);
+  };
+
+  const handleProceedToCheckout = async (e) => {
+    e.preventDefault();
+    if (!checkoutUrl || isCheckingOut) return;
+
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+
+    setIsCheckingOut(true);
+    try {
+      // Ensure the latest note is committed to the Shopify cart before navigating
+      if (noteText !== (cart?.note || '')) {
+        await updateNote(noteText.slice(0, 500));
+      }
+    } catch (err) {
+      console.warn('Note save failed prior to checkout redirect:', err);
+    } finally {
+      window.location.href = checkoutUrl;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans">
@@ -158,6 +246,63 @@ export default function CartPage() {
                   </div>
                 );
               })}
+
+              {/* Order Note Section */}
+              <div className="bg-white border border-[#D8E8DD] rounded-2xl p-5 sm:p-6 shadow-sm space-y-3 transition-all">
+                <div className="flex items-center justify-between gap-2 border-b border-[#D8E8DD]/60 pb-3">
+                  <div className="flex items-center gap-2.5">
+                    <FileText className="w-4 h-4 text-[#0B7A3B]" />
+                    <h3 className="font-heading text-base sm:text-lg font-black text-[#10231A] uppercase tracking-wider">
+                      Order Note
+                    </h3>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#7B8A82] bg-[#F5FAF6] px-2 py-0.5 rounded-full border border-[#D8E8DD]">
+                      Optional
+                    </span>
+                  </div>
+
+                  {/* Save Status Feedback */}
+                  <div className="text-right shrink-0">
+                    {isSavingNote ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs text-[#7B8A82] font-mono">
+                        <RefreshCw className="w-3 h-3 text-[#0B7A3B] animate-spin" />
+                        Saving note...
+                      </span>
+                    ) : noteSavedRecently ? (
+                      <span className="inline-flex items-center gap-1 text-xs text-[#0B7A3B] font-mono font-bold">
+                        <Check className="w-3.5 h-3.5 text-[#0B7A3B]" />
+                        Saved to order
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+
+                <p className="text-xs text-[#52645A]">
+                  Have a special request? Add a note to your order.
+                </p>
+
+                <div className="space-y-1.5 pt-1">
+                  <textarea
+                    rows={3}
+                    maxLength={500}
+                    value={noteText}
+                    onChange={handleNoteChange}
+                    onBlur={handleNoteBlur}
+                    placeholder="Enter your order note here..."
+                    className="w-full bg-[#F5FAF6] border border-[#D8E8DD] focus:border-[#0B7A3B] focus:ring-1 focus:ring-[#0B7A3B] focus:bg-white rounded-xl p-3.5 text-xs sm:text-sm text-[#10231A] placeholder-[#7B8A82] transition-all resize-none outline-none leading-relaxed"
+                  />
+
+                  <div className="flex items-center justify-between text-[11px] font-mono pt-0.5">
+                    {noteError ? (
+                      <span className="text-red-500 font-sans text-xs">{noteError}</span>
+                    ) : (
+                      <span className="text-[#7B8A82]">Special instructions, delivery preferences, or packaging requests</span>
+                    )}
+                    <span className={noteText.length >= 500 ? 'text-amber-600 font-bold' : 'text-[#7B8A82]'}>
+                      {noteText.length}/500
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Order Summary (Span 4) */}
@@ -185,10 +330,20 @@ export default function CartPage() {
               {checkoutUrl ? (
                 <a
                   href={checkoutUrl}
+                  onClick={handleProceedToCheckout}
                   className="w-full py-4 px-6 bg-[#0B7A3B] hover:bg-[#075E2D] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-[#0B7A3B]/25 flex items-center justify-center gap-2 text-center cursor-pointer hover:-translate-y-0.5"
                 >
-                  <span>Proceed to Checkout</span>
-                  <ArrowRight className="w-4 h-4" />
+                  {isCheckingOut ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <span>Saving &amp; Proceeding...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Proceed to Checkout</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </a>
               ) : (
                 <button

@@ -4,6 +4,7 @@
 
 export const CART_FRAGMENT = `
   id
+  note
   checkoutUrl
   totalQuantity
   lines(first: 50) {
@@ -114,6 +115,20 @@ export const UPDATE_CART_LINE_MUTATION = `
 export const REMOVE_FROM_CART_MUTATION = `
   mutation RemoveFromCart($cartId: ID!, $lineIds: [ID!]!) {
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart {
+        ${CART_FRAGMENT}
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const UPDATE_CART_NOTE_MUTATION = `
+  mutation CartNoteUpdate($cartId: ID!, $note: String!) {
+    cartNoteUpdate(cartId: $cartId, note: $note) {
       cart {
         ${CART_FRAGMENT}
       }

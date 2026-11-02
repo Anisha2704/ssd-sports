@@ -5,6 +5,7 @@ import {
   GET_CART_QUERY,
   UPDATE_CART_LINE_MUTATION,
   REMOVE_FROM_CART_MUTATION,
+  UPDATE_CART_NOTE_MUTATION,
 } from './queries/cart.js';
 
 /**
@@ -162,6 +163,34 @@ export async function removeCartLine(cartId, lineId) {
 
   const cart = data?.cartLinesRemove?.cart;
   const userErrors = data?.cartLinesRemove?.userErrors;
+
+  if (userErrors && userErrors.length > 0) {
+    throw new Error(userErrors.map((e) => e.message).join(' | '));
+  }
+
+  return normalizeCart(cart);
+}
+
+/**
+ * Update the order note of a Shopify cart
+ * 
+ * @param {string} cartId 
+ * @param {string} note 
+ * @returns {Promise<Object>} Cart object
+ */
+export async function updateCartNote(cartId, note = '') {
+  if (!cartId) throw new Error('Cart ID is required to update order note');
+
+  const data = await shopifyFetch({
+    query: UPDATE_CART_NOTE_MUTATION,
+    variables: {
+      cartId,
+      note: note || '',
+    },
+  });
+
+  const cart = data?.cartNoteUpdate?.cart;
+  const userErrors = data?.cartNoteUpdate?.userErrors;
 
   if (userErrors && userErrors.length > 0) {
     throw new Error(userErrors.map((e) => e.message).join(' | '));
