@@ -1,4 +1,4 @@
-import { shopifyFetch } from './client.js';
+import { shopifyFetch, getShopifyDomain } from './client.js';
 import {
   CREATE_CART_MUTATION,
   ADD_TO_CART_MUTATION,
@@ -6,6 +6,49 @@ import {
   UPDATE_CART_LINE_MUTATION,
   REMOVE_FROM_CART_MUTATION,
 } from './queries/cart.js';
+
+/**
+ * Formats a Shopify checkout URL so that it points directly to the hosted
+ * Shopify store domain (e.g. ssdsports.myshopify.com) with domain redirection
+ * disabled (_fd=0). This prevents headless custom domains that point to Vercel
+ * from intercepting the checkout route and redirecting users to the homepage.
+ *
+ * @param {string} [checkoutUrl]
+ * @returns {string} Formatted checkout URL
+ */
+export function formatCheckoutUrl(checkoutUrl) {
+  if (!checkoutUrl || typeof checkoutUrl !== 'string') return checkoutUrl;
+  try {
+    const shopifyDomain = getShopifyDomain();
+    if (!shopifyDomain) return checkoutUrl;
+
+    const url = new URL(checkoutUrl);
+    url.hostname = shopifyDomain;
+    url.protocol = 'https:';
+    // _fd=0 disables Shopify primary_domain_redirection to the headless frontend domain
+    url.searchParams.set('_fd', '0');
+    return url.toString();
+  } catch {
+    return checkoutUrl;
+  }
+}
+
+/**
+ * Normalizes cart object and ensures checkoutUrl points to the hosted Shopify checkout
+ *
+ * @param {Object|null} cart
+ * @returns {Object|null}
+ */
+export function normalizeCart(cart) {
+  if (!cart) return cart;
+  if (cart.checkoutUrl) {
+    return {
+      ...cart,
+      checkoutUrl: formatCheckoutUrl(cart.checkoutUrl),
+    };
+  }
+  return cart;
+}
 
 /**
  * Create a new Shopify cart
@@ -26,7 +69,7 @@ export async function createCart(lines = []) {
     throw new Error(userErrors.map((e) => e.message).join(' | '));
   }
 
-  return cart;
+  return normalizeCart(cart);
 }
 
 /**
@@ -49,7 +92,7 @@ export async function addToCart(cartId, lines) {
     throw new Error(userErrors.map((e) => e.message).join(' | '));
   }
 
-  return cart;
+  return normalizeCart(cart);
 }
 
 /**
@@ -67,7 +110,7 @@ export async function getCart(cartId) {
       variables: { cartId },
     });
 
-    return data?.cart || null;
+    return normalizeCart(data?.cart || null);
   } catch (err) {
     console.warn('Failed to fetch Shopify cart:', err);
     return null;
@@ -98,7 +141,7 @@ export async function updateCartLine(cartId, lineId, quantity) {
     throw new Error(userErrors.map((e) => e.message).join(' | '));
   }
 
-  return cart;
+  return normalizeCart(cart);
 }
 
 /**
@@ -124,5 +167,5 @@ export async function removeCartLine(cartId, lineId) {
     throw new Error(userErrors.map((e) => e.message).join(' | '));
   }
 
-  return cart;
+  return normalizeCart(cart);
 }

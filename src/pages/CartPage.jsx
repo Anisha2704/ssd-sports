@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import { ShoppingBag, Trash2, ArrowRight, Minus, Plus, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { formatCheckoutUrl } from '../services/shopify';
 
 function formatINR(amount) {
   if (amount === undefined || amount === null || amount === '') return '';
@@ -25,7 +26,7 @@ export default function CartPage() {
   const { cart, loading, updateQuantity, removeItem } = useCart();
   const lineItems = cart?.lines?.nodes || [];
   const subtotal = cart?.cost?.subtotalAmount?.amount || 0;
-  const checkoutUrl = cart?.checkoutUrl;
+  const checkoutUrl = cart?.checkoutUrl ? formatCheckoutUrl(cart?.checkoutUrl) : null;
 
   return (
     <div className="min-h-screen bg-white text-[#10231A] flex flex-col font-sans">
