@@ -6,6 +6,7 @@ import {
   UPDATE_CART_LINE_MUTATION,
   REMOVE_FROM_CART_MUTATION,
   UPDATE_CART_NOTE_MUTATION,
+  BUYER_IDENTITY_UPDATE_MUTATION,
 } from './queries/cart.js';
 
 /**
@@ -191,6 +192,34 @@ export async function updateCartNote(cartId, note = '') {
 
   const cart = data?.cartNoteUpdate?.cart;
   const userErrors = data?.cartNoteUpdate?.userErrors;
+
+  if (userErrors && userErrors.length > 0) {
+    throw new Error(userErrors.map((e) => e.message).join(' | '));
+  }
+
+  return normalizeCart(cart);
+}
+
+/**
+ * Update the buyer identity (email, phone, etc.) of a Shopify cart
+ * 
+ * @param {string} cartId 
+ * @param {Object} buyerIdentity 
+ * @returns {Promise<Object>} Cart object
+ */
+export async function updateCartBuyerIdentity(cartId, buyerIdentity = {}) {
+  if (!cartId) throw new Error('Cart ID is required to update buyer identity');
+
+  const data = await shopifyFetch({
+    query: BUYER_IDENTITY_UPDATE_MUTATION,
+    variables: {
+      cartId,
+      buyerIdentity,
+    },
+  });
+
+  const cart = data?.cartBuyerIdentityUpdate?.cart;
+  const userErrors = data?.cartBuyerIdentityUpdate?.userErrors;
 
   if (userErrors && userErrors.length > 0) {
     throw new Error(userErrors.map((e) => e.message).join(' | '));

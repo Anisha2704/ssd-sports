@@ -5,6 +5,7 @@ import { useHomepageHero } from '../hooks/useHomepageHero';
 import { useCollections } from '../hooks/useCollections';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
 import { searchProducts } from '../services/shopify';
 import defaultLogo from '../assets/logo.png';
 
@@ -13,6 +14,7 @@ export default function Header() {
   const { collections } = useCollections({ first: 25 });
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
+  const { customer, isAuthenticated } = useCustomerAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
@@ -324,10 +326,16 @@ export default function Header() {
             {/* Account / User Icon Button */}
             <Link
               to="/account"
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F5FAF6] hover:bg-[#EAF7EE] text-[#10231A] hover:text-[#0B7A3B] border border-[#D8E8DD] hover:border-[#0B7A3B]/40 hidden sm:flex items-center justify-center transition-all focus:outline-none"
-              aria-label="User Account"
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F5FAF6] hover:bg-[#EAF7EE] text-[#10231A] hover:text-[#0B7A3B] border border-[#D8E8DD] hover:border-[#0B7A3B]/40 hidden sm:flex items-center justify-center transition-all focus:outline-none relative ${
+                isAuthenticated ? 'border-[#0B7A3B]/60 bg-[#EAF7EE]' : ''
+              }`}
+              aria-label={isAuthenticated ? `My Account (${customer?.firstName || 'Logged In'})` : 'Sign In / Account'}
+              title={isAuthenticated ? `My Account (${customer?.firstName || 'Logged In'})` : 'Sign In / Account'}
             >
-              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.2]" />
+              <User className={`w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.2] ${isAuthenticated ? 'text-[#0B7A3B]' : ''}`} />
+              {isAuthenticated && (
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#0B7A3B] rounded-full border-2 border-white shadow-xs" />
+              )}
             </Link>
 
             {/* Wishlist Heart Icon Button */}
@@ -597,10 +605,18 @@ export default function Header() {
           })}
           <Link
             to="/account"
+            onClick={() => setMobileMenuOpen(false)}
             className="block text-[#10231A] hover:text-[#0B7A3B] font-bold text-sm uppercase tracking-wider py-2.5 border-b border-[#E2ECE6] flex items-center justify-between"
           >
-            <span>My Account</span>
-            <User className="w-4 h-4 text-[#7B8A82]" />
+            <div className="flex items-center gap-2">
+              <span>{isAuthenticated ? 'My Account' : 'Login / Register'}</span>
+              {isAuthenticated && customer?.firstName && (
+                <span className="text-[10px] font-mono font-bold text-[#0B7A3B] bg-[#EAF7EE] px-2 py-0.5 rounded-full border border-[#0B7A3B]/20">
+                  {customer.firstName}
+                </span>
+              )}
+            </div>
+            <User className={`w-4 h-4 ${isAuthenticated ? 'text-[#0B7A3B]' : 'text-[#7B8A82]'}`} />
           </Link>
           <Link
             to="/wishlist"

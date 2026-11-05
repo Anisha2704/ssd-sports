@@ -4,7 +4,8 @@ import Footer from '../components/Footer';
 import { ShoppingBag, Trash2, ArrowRight, Minus, Plus, RefreshCw, FileText, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { formatCheckoutUrl } from '../services/shopify';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
+import { formatCheckoutUrl, updateCartBuyerIdentity } from '../services/shopify';
 
 function formatINR(amount) {
   if (amount === undefined || amount === null || amount === '') return '';
@@ -24,6 +25,7 @@ function formatINR(amount) {
 
 export default function CartPage() {
   const { cart, loading, updateQuantity, removeItem, updateNote } = useCart();
+  const { customer } = useCustomerAuth();
   const lineItems = cart?.lines?.nodes || [];
   const subtotal = cart?.cost?.subtotalAmount?.amount || 0;
   const checkoutUrl = cart?.checkoutUrl ? formatCheckoutUrl(cart?.checkoutUrl) : null;
@@ -105,6 +107,16 @@ export default function CartPage() {
 
     setIsCheckingOut(true);
     try {
+      // If customer is logged in, attach their email to the cart for pre-filled checkout
+      const customerEmail = customer?.emailAddress?.emailAddress;
+      if (cart?.id && customerEmail && cart?.buyerIdentity?.email !== customerEmail) {
+        try {
+          await updateCartBuyerIdentity(cart.id, { email: customerEmail });
+        } catch (buyerIdErr) {
+          console.warn('Could not associate buyer identity with cart:', buyerIdErr);
+        }
+      }
+
       // Ensure the latest note is committed to the Shopify cart before navigating
       if (noteText !== (cart?.note || '')) {
         await updateNote(noteText.slice(0, 500));

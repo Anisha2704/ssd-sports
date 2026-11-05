@@ -24,6 +24,8 @@ export const getEnv = (key) => {
 
 export const getRawShopifyDomain = () => getEnv('VITE_SHOPIFY_STORE_DOMAIN');
 export const getShopifyStorefrontToken = () => getEnv('VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN');
+export const getCustomerAccountClientId = () => getEnv('VITE_SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID');
 
 export const RAW_SHOPIFY_DOMAIN = getRawShopifyDomain();
 export const SHOPIFY_STOREFRONT_ACCESS_TOKEN = getShopifyStorefrontToken();
+export const SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID = getCustomerAccountClientId();

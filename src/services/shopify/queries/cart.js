@@ -7,6 +7,9 @@ export const CART_FRAGMENT = `
   note
   checkoutUrl
   totalQuantity
+  buyerIdentity {
+    email
+  }
   lines(first: 50) {
     nodes {
       id
@@ -129,6 +132,20 @@ export const REMOVE_FROM_CART_MUTATION = `
 export const UPDATE_CART_NOTE_MUTATION = `
   mutation CartNoteUpdate($cartId: ID!, $note: String!) {
     cartNoteUpdate(cartId: $cartId, note: $note) {
+      cart {
+        ${CART_FRAGMENT}
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const BUYER_IDENTITY_UPDATE_MUTATION = `
+  mutation CartBuyerIdentityUpdate($cartId: ID!, $buyerIdentity: CartBuyerIdentityInput!) {
+    cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {
       cart {
         ${CART_FRAGMENT}
       }

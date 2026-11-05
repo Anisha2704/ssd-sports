@@ -9,6 +9,9 @@ export * from './videos.js';
 export * from './homepageFeature.js';
 export * from './instagramGallery.js';
 export * from './footer.js';
+export * from './customerConfig.js';
+export * from './customerAuth.js';
+export * from './customerApi.js';
 
 
 

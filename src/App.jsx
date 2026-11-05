@@ -7,11 +7,13 @@ import ProductDetailsPage from './pages/ProductDetailsPage';
 import BulkOrderPage from './pages/BulkOrderPage';
 import TrackOrderPage from './pages/TrackOrderPage';
 import AccountPage from './pages/AccountPage';
+import AccountAuthorizePage from './pages/AccountAuthorizePage';
 import WishlistPage from './pages/WishlistPage';
 import CartPage from './pages/CartPage';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { CustomerAuthProvider } from './context/CustomerAuthContext';
 import { getShopifyDomain } from './services/shopify';
 
 function ShopifyCheckoutRedirect() {
@@ -35,28 +37,35 @@ function ShopifyCheckoutRedirect() {
 
 export default function App() {
   return (
-    <WishlistProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<RootLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="catalog" element={<CatalogPage />} />
-              <Route path="catalog/:collectionHandle" element={<CatalogPage />} />
-              <Route path="products/:handle" element={<ProductDetailsPage />} />
-              <Route path="bulk-order" element={<BulkOrderPage />} />
-              <Route path="track-order" element={<TrackOrderPage />} />
-              <Route path="account" element={<AccountPage />} />
-              <Route path="wishlist" element={<WishlistPage />} />
-              <Route path="cart" element={<CartPage />} />
-              <Route path="cart/c/*" element={<ShopifyCheckoutRedirect />} />
-              <Route path="checkouts/*" element={<ShopifyCheckoutRedirect />} />
-              <Route path="*" element={<HomePage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
-    </WishlistProvider>
+    <CustomerAuthProvider>
+      <WishlistProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<RootLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="catalog" element={<CatalogPage />} />
+                <Route path="catalog/:collectionHandle" element={<CatalogPage />} />
+                <Route path="products/:handle" element={<ProductDetailsPage />} />
+                <Route path="bulk-order" element={<BulkOrderPage />} />
+                <Route path="track-order" element={<TrackOrderPage />} />
+                <Route path="account" element={<AccountPage />} />
+                <Route path="account/login" element={<AccountPage />} />
+                <Route path="account/authorize" element={<AccountAuthorizePage />} />
+                <Route path="account/orders" element={<AccountPage />} />
+                <Route path="account/profile" element={<AccountPage />} />
+                <Route path="account/addresses" element={<AccountPage />} />
+                <Route path="wishlist" element={<WishlistPage />} />
+                <Route path="cart" element={<CartPage />} />
+                <Route path="cart/c/*" element={<ShopifyCheckoutRedirect />} />
+                <Route path="checkouts/*" element={<ShopifyCheckoutRedirect />} />
+                <Route path="*" element={<HomePage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </WishlistProvider>
+    </CustomerAuthProvider>
   );
 }
